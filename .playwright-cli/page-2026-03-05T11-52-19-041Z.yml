@@ -1,0 +1,125 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - generic [ref=e7]: 2003 S Easton Road, Suite 308, Doylestown, PA 18901
+        - link "support@advancedbenefitsdesigns.com" [ref=e8] [cursor=pointer]:
+          - /url: mailto:support@advancedbenefitsdesigns.com
+        - link "215-262-5456" [ref=e9] [cursor=pointer]:
+          - /url: tel:215-262-5456
+      - generic "Social channels" [ref=e10]:
+        - link "Facebook" [ref=e11] [cursor=pointer]:
+          - /url: https://www.facebook.com/share/1A2sciAZtx/
+        - link "LinkedIn" [ref=e12] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/advancedbenefitsdesigns/
+        - link "YouTube" [ref=e13] [cursor=pointer]:
+          - /url: https://www.youtube.com/@AdvancedBenefitsDesigns
+        - link "Instagram" [ref=e14] [cursor=pointer]:
+          - /url: https://www.instagram.com/advancedbenefitdesigns?igsh=YTdxamRybzFrc2Vv
+    - generic [ref=e16]:
+      - link "Advanced Benefit Designs home" [ref=e17] [cursor=pointer]:
+        - /url: /home
+        - img "Advanced Benefit Designs" [ref=e18]
+      - navigation "Primary" [ref=e19]:
+        - link "Home" [ref=e20] [cursor=pointer]:
+          - /url: /home
+        - link "About Us" [ref=e21] [cursor=pointer]:
+          - /url: /financial-company
+        - button "Services" [ref=e23] [cursor=pointer]
+        - link "Retirement Calculator" [ref=e24] [cursor=pointer]:
+          - /url: /retirement-calculator
+        - link "Community" [ref=e25] [cursor=pointer]:
+          - /url: /community
+        - link "Blogs" [ref=e26] [cursor=pointer]:
+          - /url: /blogs
+      - link "Secure Future Hub" [ref=e27] [cursor=pointer]:
+        - /url: https://community.advancedbenefitsdesigns.com/login
+        - img "Secure Future Hub" [ref=e28]
+  - main [ref=e29]:
+    - generic [ref=e30]:
+      - heading "Loading homepage..." [level=1] [ref=e31]
+      - paragraph [ref=e32]: Pulling the latest homepage content from the live ABD backend.
+  - contentinfo [ref=e33]:
+    - generic [ref=e35]:
+      - generic [ref=e36]:
+        - img "Advanced Benefit Designs" [ref=e37]
+        - paragraph [ref=e38]: Advanced Benefit Designs delivers customized strategies for tax efficiency, retirement confidence, and long-term protection.
+      - generic [ref=e39]:
+        - heading "Services" [level=3] [ref=e40]
+        - list [ref=e41]:
+          - listitem [ref=e42]:
+            - link "Life Insurance" [ref=e43] [cursor=pointer]:
+              - /url: /life-insurance
+          - listitem [ref=e44]:
+            - link "Tax-Free Retirement" [ref=e45] [cursor=pointer]:
+              - /url: /retirement-planning-strategies
+          - listitem [ref=e46]:
+            - link "Business Preservation" [ref=e47] [cursor=pointer]:
+              - /url: /business-preservation
+          - listitem [ref=e48]:
+            - link "Estate Planning" [ref=e49] [cursor=pointer]:
+              - /url: /estate-planning
+          - listitem [ref=e50]:
+            - link "Long Term Care Planning" [ref=e51] [cursor=pointer]:
+              - /url: /long-term-care-planning
+          - listitem [ref=e52]:
+            - link "Life Time Income" [ref=e53] [cursor=pointer]:
+              - /url: /lifetime-income
+          - listitem [ref=e54]:
+            - link "Mortgage Protection" [ref=e55] [cursor=pointer]:
+              - /url: /mortgage-protection-insurance
+          - listitem [ref=e56]:
+            - link "Medicare Insurance" [ref=e57] [cursor=pointer]:
+              - /url: /medicare-insurance-plans
+      - generic [ref=e58]:
+        - heading "Areas We Serve" [level=3] [ref=e59]
+        - list [ref=e60]:
+          - listitem [ref=e61]:
+            - link "Doylestown, PA" [ref=e62] [cursor=pointer]:
+              - /url: /doylestown-pa-medicare
+          - listitem [ref=e63]:
+            - link "New Britain, PA" [ref=e64] [cursor=pointer]:
+              - /url: /new-britain-mortgage-life-insurance
+          - listitem [ref=e65]:
+            - link "Chalfont, PA" [ref=e66] [cursor=pointer]:
+              - /url: /chalfont-business-loans
+          - listitem [ref=e67]:
+            - link "Montgomeryville, PA" [ref=e68] [cursor=pointer]:
+              - /url: /montgomeryville-realestate
+          - listitem [ref=e69]:
+            - link "New Hope, PA" [ref=e70] [cursor=pointer]:
+              - /url: /new-hope
+          - listitem [ref=e71]:
+            - link "Greater Philadelphia" [ref=e72] [cursor=pointer]:
+              - /url: /the-greater-philadelphia-area
+          - listitem [ref=e73]:
+            - link "Horsham" [ref=e74] [cursor=pointer]:
+              - /url: /best-financial-advisors-near-me
+      - generic [ref=e75]:
+        - heading "Get Connected" [level=3] [ref=e76]
+        - paragraph [ref=e77]: 2003 S Easton Road, Suite 308, Doylestown, PA 18901
+        - paragraph [ref=e78]:
+          - link "215-262-5456" [ref=e79] [cursor=pointer]:
+            - /url: tel:215-262-5456
+        - paragraph [ref=e80]:
+          - link "support@advancedbenefitsdesigns.com" [ref=e81] [cursor=pointer]:
+            - /url: mailto:support@advancedbenefitsdesigns.com
+        - generic "Social channels" [ref=e82]:
+          - link "Facebook" [ref=e83] [cursor=pointer]:
+            - /url: https://www.facebook.com/share/1A2sciAZtx/
+          - link "LinkedIn" [ref=e84] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/advancedbenefitsdesigns/
+          - link "YouTube" [ref=e85] [cursor=pointer]:
+            - /url: https://www.youtube.com/@AdvancedBenefitsDesigns
+          - link "Instagram" [ref=e86] [cursor=pointer]:
+            - /url: https://www.instagram.com/advancedbenefitdesigns?igsh=YTdxamRybzFrc2Vv
+    - paragraph [ref=e88]:
+      - text: Copyright © Advanced Benefit Designs 2026 | Powered by
+      - link "Global Creative Services" [ref=e89] [cursor=pointer]:
+        - /url: https://gcsrvllc.com/?Advancedbenefitsdesigns
+      - text: "|"
+      - link "Privacy Policy" [ref=e90] [cursor=pointer]:
+        - /url: /privacy-policy
+      - text: "|"
+      - link "Terms & Conditions" [ref=e91] [cursor=pointer]:
+        - /url: /terms-conditions
