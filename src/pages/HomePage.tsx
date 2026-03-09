@@ -240,10 +240,12 @@ const FAQS = [
 
 const HomePage = ({ homePage, loading, error }: HomePageProps) => {
   const excerpt = homePage ? plainTextFromHtml(homePage.excerpt).replace(/\s+/g, ' ').trim() : ''
+  const excerptLooksNoisy = /start free consultation|request plan review|choose your path/i.test(excerpt)
+  const cleanedExcerpt = excerptLooksNoisy ? '' : excerpt
 
   const summary =
-    excerpt.length > 0
-      ? `${excerpt.slice(0, 220).replace(/\s+\S*$/, '')}...`
+    cleanedExcerpt.length > 0
+      ? `${cleanedExcerpt.slice(0, 220).replace(/\s+\S*$/, '')}...`
       : 'Tax-efficient planning, risk-aware guidance, and implementation support designed for people who want clarity instead of confusion.'
 
   const backendMessage = loading
@@ -270,28 +272,31 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
               </Link>
             </div>
           </div>
-
           <aside className="home2026-hero-panel">
-            <p className="home2026-live-pill">{backendMessage}</p>
-            <div className="home2026-kpis">
-              <article>
-                <span>Response Style</span>
-                <strong>No Pressure</strong>
-              </article>
-              <article>
-                <span>Plan Focus</span>
-                <strong>Tax-Efficient</strong>
-              </article>
-              <article>
-                <span>Model</span>
-                <strong>Independent</strong>
-              </article>
-              <article>
-                <span>Support</span>
-                <strong>Ongoing Reviews</strong>
-              </article>
-            </div>
-          </aside>
+          <p className="home2026-live-pill">{backendMessage}</p>
+
+          <div className="home2026-kpis">
+            <article>
+              <span>Advisory Approach</span>
+              <strong>Transparent & No-Pressure Guidance</strong>
+            </article>
+
+            <article>
+              <span>Strategy Focus</span>
+              <strong>Tax-Efficient Wealth Planning</strong>
+            </article>
+
+            <article>
+              <span>Advisory Model</span>
+              <strong>Independent & Client-First</strong>
+            </article>
+
+            <article>
+              <span>Initial Consultation</span>
+              <strong>100% Complimentary</strong>
+            </article>
+          </div>
+        </aside>
         </div>
       </section>
 
@@ -321,7 +326,11 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
         <div className="container home2026-strategy-grid animate-in">
           <div className="home2026-strategy-copy">
             <p className="eyebrow">Strategic Financial Planning</p>
-            <h2>Engineered for Confidence</h2>
+            <h2>
+              Strategic Financial Planning,
+              <br />
+              <span>Engineered for Confidence</span>
+            </h2>
             <p>
               Tax-efficient strategies. Risk-aware decisions. Designed for people who want clarity,
               not complexity.
@@ -330,33 +339,16 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
               <Link to="/contact-us" className="btn btn-primary">
                 Get My Financial Roadmap
               </Link>
-              <a
-                className="btn btn-outline"
-                href="https://community.advancedbenefitsdesigns.com/login"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Explore Community
+              <a className="btn btn-outline" href="#services">
+                Explore Services
               </a>
             </div>
           </div>
 
           <article className="home2026-strategy-card">
-            <p className="home2026-path-eyebrow">Let&apos;s Build Your Plan</p>
-            <h3>Fast intake. Human guidance.</h3>
-            <p>
-              Share a few details and we will reach out with your best-fit strategy and next-step
-              options.
-            </p>
-            <div className="home2026-mini-list">
-              <span>Goal Mapping</span>
-              <span>Tax-Aware Options</span>
-              <span>Protection Design</span>
-              <span>Clear Timeline</span>
-            </div>
-            <Link to="/contact-us" className="home2026-path-btn">
-              Start Planning
-            </Link>
+            <h3>LET&apos;S BUILD YOUR PLAN</h3>
+            <p>Share a few details and we will reach out with your best-fit strategy.</p>
+            <span className="home2026-strategy-card-line" aria-hidden="true" />
           </article>
         </div>
       </section>
@@ -422,16 +414,17 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
         </div>
       </section>
 
-      <section className="home2026-services">
-        <div className="container">
-          <h2>Our Services</h2>
-          <p>Built for readability and faster decision-making without losing strategic depth.</p>
-          <div className="home2026-service-grid">
+      <section id="services" className="home2026-services abd-section abd-hero">
+        <div className="container abd-container">
+          <h2 className="abd-services-title">Our Services</h2>
+          <div className="home2026-service-grid abd-grid abd-services-grid">
             {SERVICE_CARDS.map((service) => (
-              <Link key={service.to} to={service.to} className="home2026-service-item">
-                <i aria-hidden="true">{service.icon}</i>
-                <span>{service.title}</span>
-                <small>{service.description}</small>
+              <Link key={service.to} to={service.to} className="home2026-service-item abd-card abd-service-card">
+                <div className="abd-cta-icon" aria-hidden="true">
+                  {service.icon}
+                </div>
+                <h2>{service.title}</h2>
+                <h5>{service.description}</h5>
               </Link>
             ))}
           </div>
