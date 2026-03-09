@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+﻿import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import RichContent from '../components/RichContent'
 import type { WpRecord } from '../types'
@@ -68,7 +68,41 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
   }
 
   return (
-    <section className="home-preserved">
+    <article className="home-preserved">
+      <section className="container home-command animate-in">
+        <div className="home-command-copy">
+          <p className="eyebrow">Advisory Grade Planning</p>
+          <h1>Build financial confidence with strategy, not guesswork.</h1>
+          <p>
+            Review retirement, insurance, tax, and estate decisions from one connected planning lens.
+          </p>
+
+          <div className="home-command-actions">
+            <Link to="/retirement-calculator" className="btn btn-primary">
+              Run Retirement Scenario
+            </Link>
+            <Link to="/contact-us" className="btn btn-outline">
+              Talk to an Advisor
+            </Link>
+          </div>
+        </div>
+
+        <div className="home-command-metrics">
+          <article>
+            <span>Planning Lens</span>
+            <strong>Tax + Income + Risk</strong>
+          </article>
+          <article>
+            <span>Engagement Style</span>
+            <strong>Strategy-First Advisory</strong>
+          </article>
+          <article>
+            <span>Client Experience</span>
+            <strong>Transparent and Actionable</strong>
+          </article>
+        </div>
+      </section>
+
       <div className="home-live-frame">
         <RichContent
           html={homePage.content}
@@ -79,7 +113,7 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
           executeScripts
         />
       </div>
-    </section>
+    </article>
   )
 }
 
