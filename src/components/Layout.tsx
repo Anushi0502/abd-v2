@@ -1,14 +1,6 @@
-﻿import { type ReactNode, useEffect, useMemo, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
-import {
-  AREAS_SERVED,
-  COMMUNITY_BADGE_URL,
-  CONTACT_DETAILS,
-  LOGO_URL,
-  PRIMARY_NAV,
-  SERVICE_NAV,
-  SOCIAL_LINKS,
-} from '../constants'
+import { type ReactNode, useEffect, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
+import { AREAS_SERVED, CONTACT_DETAILS, LOGO_URL, PRIMARY_NAV, SERVICE_NAV, SOCIAL_LINKS } from '../constants'
 
 interface LayoutProps {
   children: ReactNode
@@ -16,15 +8,7 @@ interface LayoutProps {
 
 const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const location = useLocation()
-
-  const flattenedLinks = useMemo(() => {
-    return [...PRIMARY_NAV, ...SERVICE_NAV]
-  }, [])
-
-  useEffect(() => {
-    setMobileOpen(false)
-  }, [location.pathname])
+  const closeMobileMenu = () => setMobileOpen(false)
 
   useEffect(() => {
     if (!mobileOpen) {
@@ -47,69 +31,58 @@ const SiteHeader = () => {
         Skip to content
       </a>
 
-      <div className="site-topbar">
-        <div className="container site-topbar-inner">
-          <p className="site-promo">Fiduciary-first planning for tax-smart retirement outcomes.</p>
-
-          <div className="site-contact-meta">
-            <a href={`tel:${CONTACT_DETAILS.phone}`}>{CONTACT_DETAILS.phone}</a>
-            <a href={`mailto:${CONTACT_DETAILS.email}`}>{CONTACT_DETAILS.email}</a>
-          </div>
-
-          <div className="site-social-row" aria-label="Social channels">
-            {SOCIAL_LINKS.slice(0, 3).map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.label}
-                title={social.label}
-              >
-                {social.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-
       <div className="site-nav-shell">
         <div className="container site-nav-row">
-          <Link to="/home" className="brand-link" aria-label="Advanced Benefit Designs home">
+          <Link
+            to="/home"
+            className="brand-link"
+            aria-label="Advanced Benefit Designs home"
+            onClick={closeMobileMenu}
+          >
             <img src={LOGO_URL} alt="Advanced Benefit Designs" className="brand-logo" />
           </Link>
 
           <nav className="site-nav" aria-label="Primary">
-            <NavLink to="/home">Home</NavLink>
-            <NavLink to="/financial-company">About Us</NavLink>
+            <NavLink to="/home" onClick={closeMobileMenu}>
+              Home
+            </NavLink>
+            <NavLink to="/financial-company" onClick={closeMobileMenu}>
+              About Us
+            </NavLink>
 
             <div className="site-dropdown">
               <button type="button" className="dropdown-trigger" aria-haspopup="true">
-                Services
+                Services <span aria-hidden="true">v</span>
               </button>
               <div className="dropdown-panel" role="menu">
                 {SERVICE_NAV.map((item) => (
-                  <NavLink key={item.to} to={item.to} role="menuitem">
+                  <NavLink key={item.to} to={item.to} role="menuitem" onClick={closeMobileMenu}>
                     {item.label}
                   </NavLink>
                 ))}
               </div>
             </div>
 
-            <NavLink to="/retirement-calculator">Retirement Calculator</NavLink>
-            <NavLink to="/community">Community</NavLink>
-            <NavLink to="/blogs">Blogs</NavLink>
+            <NavLink to="/retirement-calculator" onClick={closeMobileMenu}>
+              Retirement Calculator
+            </NavLink>
+            <NavLink to="/community" onClick={closeMobileMenu}>
+              Community
+            </NavLink>
+            <NavLink to="/blogs" onClick={closeMobileMenu}>
+              Blogs
+            </NavLink>
           </nav>
 
           <a
-            className="community-badge"
+            className="site-signup"
             href="https://community.advancedbenefitsdesigns.com/login"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open Secure Future Hub"
+            onClick={closeMobileMenu}
           >
-            <img src={COMMUNITY_BADGE_URL} alt="Secure Future Hub" />
-            <span>Secure Future Hub</span>
+            Sign Up
           </a>
 
           <button
@@ -129,7 +102,7 @@ const SiteHeader = () => {
             <section>
               <h3>Primary</h3>
               {PRIMARY_NAV.map((item) => (
-                <NavLink key={item.to} to={item.to}>
+                <NavLink key={item.to} to={item.to} onClick={closeMobileMenu}>
                   {item.label}
                 </NavLink>
               ))}
@@ -138,7 +111,7 @@ const SiteHeader = () => {
             <section>
               <h3>Services</h3>
               {SERVICE_NAV.map((item) => (
-                <NavLink key={item.to} to={item.to}>
+                <NavLink key={item.to} to={item.to} onClick={closeMobileMenu}>
                   {item.label}
                 </NavLink>
               ))}
@@ -149,6 +122,13 @@ const SiteHeader = () => {
               <a href={`tel:${CONTACT_DETAILS.phone}`}>{CONTACT_DETAILS.phone}</a>
               <a href={`mailto:${CONTACT_DETAILS.email}`}>{CONTACT_DETAILS.email}</a>
               <p>{CONTACT_DETAILS.address}</p>
+              <a
+                href="https://community.advancedbenefitsdesigns.com/login"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Sign Up
+              </a>
             </section>
           </div>
         </div>

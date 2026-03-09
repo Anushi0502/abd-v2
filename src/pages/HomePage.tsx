@@ -1,4 +1,4 @@
-﻿import { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import RichContent from '../components/RichContent'
 import type { WpRecord } from '../types'
@@ -69,36 +69,36 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
 
   return (
     <article className="home-preserved">
-      <section className="container home-command animate-in">
-        <div className="home-command-copy">
-          <p className="eyebrow">Advisory Grade Planning</p>
-          <h1>Build financial confidence with strategy, not guesswork.</h1>
-          <p>
-            Review retirement, insurance, tax, and estate decisions from one connected planning lens.
-          </p>
-
-          <div className="home-command-actions">
-            <Link to="/retirement-calculator" className="btn btn-primary">
-              Run Retirement Scenario
-            </Link>
-            <Link to="/contact-us" className="btn btn-outline">
-              Talk to an Advisor
-            </Link>
-          </div>
+      <section className="home-path-intro animate-in">
+        <div className="container">
+          <h1>Choose Your Path to Financial Security</h1>
         </div>
+      </section>
 
-        <div className="home-command-metrics">
-          <article>
-            <span>Planning Lens</span>
-            <strong>Tax + Income + Risk</strong>
+      <section className="home-path-stage">
+        <div className="home-path-backdrop" aria-hidden="true" />
+
+        <div className="container home-path-grid animate-in">
+          <article className="home-path-card is-new">
+            <div className="home-path-icon" aria-hidden="true">
+              <span>01</span>
+            </div>
+            <h2>I'm New Here</h2>
+            <p>Start with a clear, pressure-free consultation.</p>
+            <Link to="/contact-us" className="home-path-btn">
+              Start Free Consultation
+            </Link>
           </article>
-          <article>
-            <span>Engagement Style</span>
-            <strong>Strategy-First Advisory</strong>
-          </article>
-          <article>
-            <span>Client Experience</span>
-            <strong>Transparent and Actionable</strong>
+
+          <article className="home-path-card is-review">
+            <div className="home-path-icon" aria-hidden="true">
+              <span>02</span>
+            </div>
+            <h2>I Already Have a Plan</h2>
+            <p>Get a second opinion on what you already have.</p>
+            <Link to="/contact-us" className="home-path-btn">
+              Request Plan Review
+            </Link>
           </article>
         </div>
       </section>

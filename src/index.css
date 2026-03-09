@@ -1569,6 +1569,228 @@ main {
   }
 }
 
+/* Screenshot-style header and home path section */
+.skip-link {
+  position: absolute;
+  left: 0.7rem;
+  top: -3rem;
+  background: #0f1f8a;
+  color: #fff;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  z-index: 90;
+}
+
+.skip-link:focus {
+  top: 0.7rem;
+}
+
+.container {
+  width: min(100vw - 2rem, 1240px);
+}
+
+.site-nav-shell {
+  background: #fff;
+  border-bottom: 1px solid rgba(10, 24, 91, 0.1);
+  box-shadow: 0 8px 20px rgba(10, 24, 91, 0.08);
+}
+
+.site-nav-row {
+  min-height: 100px;
+  grid-template-columns: auto 1fr auto auto;
+  gap: 1.3rem;
+}
+
+.brand-logo {
+  height: 56px;
+}
+
+.site-nav {
+  gap: clamp(0.9rem, 1.8vw, 2.1rem);
+}
+
+.site-nav a,
+.dropdown-trigger {
+  color: #1f7f03;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding-bottom: 0.25rem;
+}
+
+.site-nav a {
+  white-space: nowrap;
+}
+
+.site-nav .active {
+  color: #1f2db8;
+}
+
+.dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.dropdown-trigger span {
+  font-size: 0.72em;
+}
+
+.dropdown-panel {
+  min-width: 270px;
+}
+
+.site-signup {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  border-radius: 999px;
+  border: 2px solid #1e8a0c;
+  background: linear-gradient(145deg, #2ca013, #25890f);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.48rem 1rem;
+  box-shadow: 0 8px 18px rgba(37, 137, 15, 0.32);
+}
+
+.site-signup:hover {
+  transform: translateY(-1px);
+}
+
+.mobile-menu-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.mobile-menu-grid h3 {
+  margin: 0 0 0.35rem;
+  color: #0f1f49;
+}
+
+.home-preserved {
+  padding: 0 0 2.5rem;
+}
+
+.home-path-intro {
+  padding: 0.95rem 0 0.75rem;
+  background: #fff;
+}
+
+.home-path-intro h1 {
+  margin: 0;
+  text-align: center;
+  color: #1f2db8;
+  font-size: clamp(2rem, 4.2vw, 3.65rem);
+  line-height: 1.12;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.home-path-stage {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2.1rem, 4vw, 3.2rem) 0 clamp(2.7rem, 4.6vw, 3.9rem);
+}
+
+.home-path-backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(17, 35, 126, 0.5), rgba(22, 94, 10, 0.42)),
+    url('https://advancedbenefitdesigns.com/wp-content/uploads/2025/11/ABD-Module-1-4-7.png')
+      center / cover no-repeat;
+}
+
+.home-path-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2.3rem);
+}
+
+.home-path-card {
+  min-height: clamp(420px, 48vw, 520px);
+  border-radius: 46px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 24px 44px rgba(8, 16, 70, 0.36);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(1.3rem, 2.5vw, 2rem);
+  color: #fff;
+}
+
+.home-path-card.is-new {
+  background: linear-gradient(165deg, #1c307e, #13265e);
+}
+
+.home-path-card.is-review {
+  background: linear-gradient(165deg, #2f9a13, #1f7d0a);
+}
+
+.home-path-icon {
+  width: clamp(84px, 8.8vw, 112px);
+  height: clamp(84px, 8.8vw, 112px);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  display: grid;
+  place-content: center;
+}
+
+.home-path-icon span {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.home-path-card h2 {
+  margin: clamp(1.2rem, 2.1vw, 1.7rem) 0 0;
+  color: #fff;
+  font-size: clamp(2rem, 3.9vw, 3rem);
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.home-path-card p {
+  margin: clamp(0.75rem, 1.4vw, 1rem) 0 0;
+  max-width: 20ch;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: clamp(1.4rem, 2.4vw, 2.15rem);
+  line-height: 1.28;
+  font-weight: 600;
+}
+
+.home-path-btn {
+  margin-top: clamp(1.2rem, 2.2vw, 1.9rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  border-radius: 999px;
+  padding: 0.65rem 1.6rem;
+  background: #1f2d8e;
+  color: #fff;
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+  font-weight: 700;
+  box-shadow: 0 16px 26px rgba(9, 21, 79, 0.34);
+}
+
+.home-path-btn:hover {
+  transform: translateY(-1px);
+  background: #19257a;
+}
+
+.home-live-frame {
+  margin-top: 1.2rem;
+}
+
 @media (max-width: 1100px) {
   .site-topbar {
     display: none;
@@ -1583,13 +1805,25 @@ main {
     display: none;
   }
 
-  .community-badge {
+  .site-signup {
     display: none;
   }
 
   .mobile-menu-toggle,
   .mobile-menu {
     display: block;
+  }
+
+  .mobile-menu-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-path-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-path-card {
+    min-height: 390px;
   }
 
   .enhanced-layout,
@@ -1621,11 +1855,29 @@ main {
 
 @media (max-width: 700px) {
   .container {
-    width: calc(100vw - 0.2rem);
+    width: calc(100vw - 1rem);
   }
 
   .brand-logo {
     height: 42px;
+  }
+
+  .home-path-intro h1 {
+    font-size: clamp(1.8rem, 8.2vw, 2.4rem);
+  }
+
+  .home-path-card {
+    border-radius: 28px;
+    min-height: 350px;
+    padding: 1.2rem;
+  }
+
+  .home-path-card h2 {
+    font-size: clamp(1.55rem, 7.2vw, 2.1rem);
+  }
+
+  .home-path-card p {
+    font-size: clamp(1.02rem, 4.8vw, 1.3rem);
   }
 
   .home-preserved-banner,
