@@ -4071,3 +4071,137 @@ h4 {
   ) {
   margin-top: clamp(1.15rem, 2.2vw, 2rem);
 }
+
+/* Header hardening: stable desktop nav + correct mobile menu behavior */
+.site-nav-row {
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: clamp(0.7rem, 1.6vw, 1.2rem);
+}
+
+.site-nav {
+  min-width: 0;
+  flex-wrap: nowrap;
+  gap: clamp(0.32rem, 0.92vw, 0.84rem);
+}
+
+.site-nav a,
+.dropdown-trigger {
+  font-size: clamp(0.86rem, 0.9vw, 0.98rem);
+  padding: 0.42rem 0.62rem;
+  white-space: nowrap;
+}
+
+.dropdown-panel {
+  z-index: 80;
+}
+
+.site-signup {
+  font-size: clamp(0.82rem, 0.88vw, 0.94rem);
+  padding: 0.44rem 0.9rem;
+}
+
+.mobile-menu-toggle {
+  align-items: center;
+  justify-content: center;
+  gap: 0.22rem;
+}
+
+.mobile-menu-toggle span {
+  display: block;
+  width: 16px;
+  height: 2px;
+  border-radius: 99px;
+  background: #0f2a74;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mobile-menu-toggle.is-open span:nth-child(1) {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.mobile-menu-toggle.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-toggle.is-open span:nth-child(3) {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+.mobile-menu {
+  display: none;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  padding: 0 1rem;
+  transition: max-height 0.28s ease, opacity 0.22s ease, padding 0.22s ease;
+}
+
+.mobile-menu.is-open,
+.mobile-menu[aria-hidden='false'] {
+  display: block;
+  max-height: min(78vh, 760px);
+  overflow-y: auto;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  padding: 0.75rem 1rem 1rem;
+}
+
+.mobile-menu[aria-hidden='true'] {
+  display: none !important;
+}
+
+.mobile-menu-grid {
+  gap: 0.85rem;
+}
+
+.mobile-menu-grid section {
+  border: 1px solid rgba(12, 38, 120, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  padding: 0.72rem 0.82rem;
+}
+
+.mobile-menu-grid h3 {
+  margin: 0 0 0.35rem;
+}
+
+@media (max-width: 1220px) {
+  .site-topbar {
+    display: none;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .site-signup {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: inline-flex;
+  }
+
+  .site-nav-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    min-height: 76px;
+    gap: 0.75rem;
+  }
+
+  .brand-logo {
+    height: clamp(40px, 5vw, 48px);
+  }
+}
+
+@media (max-width: 700px) {
+  .site-nav-row {
+    min-height: 68px;
+  }
+
+  .brand-logo {
+    height: 38px;
+  }
+}
