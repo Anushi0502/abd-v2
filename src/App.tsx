@@ -1,11 +1,13 @@
+import { useMemo } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Layout from './components/Layout'
 import { resolveAliasSlug } from './lib/html'
 import { useContentIndex } from './hooks/useContentIndex'
-import BlogsPage from './pages/BlogsPage'
-import DynamicPage from './pages/DynamicPage'
-import HomePage from './pages/HomePage'
-import RetirementCalculatorPage from './pages/RetirementCalculatorPage'
+import BlogsPage from './pages/blogs'
+import DynamicPage from './pages/dynamic'
+import { DYNAMIC_ROUTE_COMPONENTS } from './pages/dynamic/routeRegistry'
+import HomePage from './pages/home'
+import RetirementCalculatorPage from './pages/retirement'
 import type { WpRecord } from './types'
 
 interface DynamicRouteResolverProps {
@@ -51,6 +53,18 @@ const DynamicRouteResolver = ({ pages, posts, loading, error }: DynamicRouteReso
 const AppShell = () => {
   const { pages, posts, loading, error } = useContentIndex()
 
+  const pageBySlug = useMemo(() => {
+    return new Map(pages.map((entry) => [entry.slug, entry]))
+  }, [pages])
+
+  const postBySlug = useMemo(() => {
+    return new Map(posts.map((entry) => [entry.slug, entry]))
+  }, [posts])
+
+  const dedicatedDynamicRoutes = useMemo(() => {
+    return Object.entries(DYNAMIC_ROUTE_COMPONENTS)
+  }, [])
+
   const homePage = pages.find((entry) => entry.slug === 'home') ?? null
   const retirementCalculatorPage =
     pages.find((entry) => entry.slug === 'retirement-calculator') ?? null
@@ -71,6 +85,21 @@ const AppShell = () => {
           }
         />
         <Route path="/blogs" element={<BlogsPage posts={posts} loading={loading} />} />
+        {dedicatedDynamicRoutes.map(([slug, RouteComponent]) => (
+          <Route
+            key={slug}
+            path={`/${slug}`}
+            element={
+              <RouteComponent
+                slug={slug}
+                entity={pageBySlug.get(slug) ?? postBySlug.get(slug) ?? null}
+                loading={loading}
+                error={error}
+                suggestedPages={pages}
+              />
+            }
+          />
+        ))}
         <Route
           path="*"
           element={<DynamicRouteResolver pages={pages} posts={posts} loading={loading} error={error} />}

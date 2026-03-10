@@ -4,7 +4,7 @@ import RichContent from '../components/RichContent'
 import { formatDate, extractHighlights, plainTextFromHtml } from '../lib/html'
 import type { WpRecord } from '../types'
 
-interface DynamicPageProps {
+export interface DynamicPageProps {
   entity: WpRecord | null
   slug: string
   loading: boolean
@@ -58,12 +58,25 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
   }
 
   const highlights = extractHighlights(entity.content, 7)
-  const summaryText = plainTextFromHtml(entity.excerpt) || plainTextFromHtml(entity.content).slice(0, 260)
+  const summarySource = plainTextFromHtml(entity.excerpt) || plainTextFromHtml(entity.content).slice(0, 360)
+  const summaryText =
+    summarySource.length > 290 ? `${summarySource.slice(0, 287).replace(/\s+\S*$/, '')}...` : summarySource
+  const heroHighlights =
+    highlights.length > 0
+      ? highlights.slice(0, 4)
+      : [
+          'Personalized strategy aligned to your goals',
+          'Tax-aware and risk-aware planning guidance',
+          'Implementation support and periodic reviews',
+          'Clear next steps without pressure',
+        ]
+  const railHighlights = highlights.length > 0 ? highlights.slice(0, 6) : heroHighlights
   const readingMinutes = estimateReadingMinutes(plainTextFromHtml(entity.content))
+  const pageSlugClass = `page-${entity.slug.replace(/[^a-z0-9-]+/gi, '-').toLowerCase()}`
 
   return (
-    <article className="enhanced-page">
-      <section className="container page-crumbs animate-in">
+    <article className={`enhanced-page page2026 page2026-dynamic ${pageSlugClass}`}>
+      <section className="container page-crumbs page2026-crumbs animate-in">
         <Link to="/home">Home</Link>
         <span>/</span>
         <span>{entity.type === 'post' ? 'Blogs' : 'Advisory'}</span>
@@ -71,8 +84,8 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
         <strong>{entity.title}</strong>
       </section>
 
-      <section className="container enhanced-hero animate-in">
-        <p className="eyebrow">{entity.type === 'post' ? 'Blog Article' : 'Advisory Page'}</p>
+      <section className="container enhanced-hero page2026-hero animate-in">
+        <p className="eyebrow">{entity.type === 'post' ? 'Insights Article' : 'Client Strategy Brief'}</p>
         <h1>{entity.title}</h1>
         <p>{summaryText}</p>
 
@@ -80,16 +93,14 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
           <span>Published: {formatDate(entity.date)}</span>
           <span>Updated: {formatDate(entity.modified)}</span>
           <span>{readingMinutes} min read</span>
-          <Link to="/contact-us">Talk to an Advisor</Link>
+          <Link to="/contact-us">Schedule a Strategy Call</Link>
         </div>
 
-        {highlights.length > 0 && (
-          <div className="hero-highlights">
-            {highlights.slice(0, 4).map((highlight) => (
-              <span key={highlight}>{highlight}</span>
-            ))}
-          </div>
-        )}
+        <div className="hero-highlights">
+          {heroHighlights.map((highlight) => (
+            <span key={highlight}>{highlight}</span>
+          ))}
+        </div>
       </section>
 
       <section className="container enhanced-layout">
@@ -101,17 +112,17 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
           <div className="rail-card">
             <h3>Key Takeaways</h3>
             <ul>
-              {highlights.slice(0, 6).map((highlight) => (
+              {railHighlights.map((highlight) => (
                 <li key={highlight}>{highlight}</li>
               ))}
             </ul>
           </div>
 
           <div className="rail-card rail-cta rail-cta-sticky">
-            <h3>Need a second opinion on your current strategy?</h3>
+            <h3>Need clear guidance for your next financial move?</h3>
             <p>
-              Schedule a no-pressure review and get recommendations tailored to your timeline,
-              risk, and income goals.
+              Book a focused review and receive recommendations tailored to your timeline, income,
+              and risk comfort.
             </p>
             <Link to="/contact-us" className="btn btn-primary">
               Request Strategy Review
@@ -151,10 +162,10 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
       )}
 
       <section className="container upgrade-band animate-in">
-        <h2>Built to be clearer, faster, and conversion-focused.</h2>
+        <h2>Ready for a More Confident Financial Decision?</h2>
         <p>
-          Every internal page now uses stronger hierarchy, tighter content flow, and explicit action
-          paths while preserving live source data and backend connectivity.
+          Start a focused conversation and get guidance that aligns with your goals, timeline, and
+          priorities.
         </p>
         <Link to="/contact-us" className="btn btn-outline">
           Start Your Consultation

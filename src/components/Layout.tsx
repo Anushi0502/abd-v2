@@ -8,22 +8,48 @@ interface LayoutProps {
 
 const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const closeMobileMenu = () => setMobileOpen(false)
+  const [servicesOpen, setServicesOpen] = useState(false)
+  const closeServicesMenu = () => setServicesOpen(false)
+  const closeAllMenus = () => {
+    setMobileOpen(false)
+    setServicesOpen(false)
+  }
 
   useEffect(() => {
-    if (!mobileOpen) {
+    if (!mobileOpen && !servicesOpen) {
       return
     }
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setMobileOpen(false)
+        setServicesOpen(false)
       }
     }
 
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [mobileOpen])
+  }, [mobileOpen, servicesOpen])
+
+  useEffect(() => {
+    if (!servicesOpen) {
+      return
+    }
+
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target
+      if (!(target instanceof HTMLElement)) {
+        return
+      }
+
+      if (!target.closest('.site-dropdown')) {
+        setServicesOpen(false)
+      }
+    }
+
+    window.addEventListener('pointerdown', onPointerDown)
+    return () => window.removeEventListener('pointerdown', onPointerDown)
+  }, [servicesOpen])
 
   return (
     <header className="site-header">
@@ -37,39 +63,49 @@ const SiteHeader = () => {
             to="/home"
             className="brand-link"
             aria-label="Advanced Benefit Designs home"
-            onClick={closeMobileMenu}
+            onClick={closeAllMenus}
           >
             <img src={LOGO_URL} alt="Advanced Benefit Designs" className="brand-logo" />
           </Link>
 
           <nav className="site-nav" aria-label="Primary">
-            <NavLink to="/home" onClick={closeMobileMenu}>
+            <NavLink to="/home" onClick={closeAllMenus}>
               Home
             </NavLink>
-            <NavLink to="/financial-company" onClick={closeMobileMenu}>
+            <NavLink to="/financial-company" onClick={closeAllMenus}>
               About Us
             </NavLink>
 
-            <div className="site-dropdown">
-              <button type="button" className="dropdown-trigger" aria-haspopup="true">
+            <div
+              className={`site-dropdown ${servicesOpen ? 'is-open' : ''}`}
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={closeServicesMenu}
+            >
+              <button
+                type="button"
+                className="dropdown-trigger"
+                aria-haspopup="true"
+                aria-expanded={servicesOpen}
+                onClick={() => setServicesOpen((current) => !current)}
+              >
                 Services <span aria-hidden="true">v</span>
               </button>
-              <div className="dropdown-panel" role="menu">
+              <div className={`dropdown-panel ${servicesOpen ? 'is-open' : ''}`} role="menu">
                 {SERVICE_NAV.map((item) => (
-                  <NavLink key={item.to} to={item.to} role="menuitem" onClick={closeMobileMenu}>
+                  <NavLink key={item.to} to={item.to} role="menuitem" onClick={closeAllMenus}>
                     {item.label}
                   </NavLink>
                 ))}
               </div>
             </div>
 
-            <NavLink to="/retirement-calculator" onClick={closeMobileMenu}>
+            <NavLink to="/retirement-calculator" onClick={closeAllMenus}>
               Retirement Calculator
             </NavLink>
-            <NavLink to="/community" onClick={closeMobileMenu}>
+            <NavLink to="/community" onClick={closeAllMenus}>
               Community
             </NavLink>
-            <NavLink to="/blogs" onClick={closeMobileMenu}>
+            <NavLink to="/blogs" onClick={closeAllMenus}>
               Blogs
             </NavLink>
           </nav>
@@ -80,14 +116,17 @@ const SiteHeader = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open Secure Future Hub"
-            onClick={closeMobileMenu}
+            onClick={closeAllMenus}
           >
             Sign Up
           </a>
 
           <button
             className={`mobile-menu-toggle ${mobileOpen ? 'is-open' : ''}`}
-            onClick={() => setMobileOpen((current) => !current)}
+            onClick={() => {
+              setMobileOpen((current) => !current)
+              setServicesOpen(false)
+            }}
             aria-expanded={mobileOpen}
             aria-label="Toggle navigation"
           >
@@ -102,7 +141,7 @@ const SiteHeader = () => {
             <section>
               <h3>Primary</h3>
               {PRIMARY_NAV.map((item) => (
-                <NavLink key={item.to} to={item.to} onClick={closeMobileMenu}>
+                <NavLink key={item.to} to={item.to} onClick={closeAllMenus}>
                   {item.label}
                 </NavLink>
               ))}
@@ -111,7 +150,7 @@ const SiteHeader = () => {
             <section>
               <h3>Services</h3>
               {SERVICE_NAV.map((item) => (
-                <NavLink key={item.to} to={item.to} onClick={closeMobileMenu}>
+                <NavLink key={item.to} to={item.to} onClick={closeAllMenus}>
                   {item.label}
                 </NavLink>
               ))}

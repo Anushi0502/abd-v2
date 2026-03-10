@@ -1,6 +1,7 @@
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { SERVICE_NAV } from '../constants'
-import { formatDate, plainTextFromHtml } from '../lib/html'
+import { plainTextFromHtml } from '../lib/html'
 import type { WpRecord } from '../types'
 
 interface HomePageProps {
@@ -10,10 +11,10 @@ interface HomePageProps {
 }
 
 const TRUST_STATS = [
-  { value: '25+', label: 'Years of Industry Experience' },
-  { value: '1,000+', label: 'Financial Plans Designed' },
-  { value: 'Independent', label: 'Client-First Advisory Model' },
-  { value: 'Ongoing', label: 'Reviews & Strategy Adjustments' },
+  { key: 'years', value: '25+', label: 'Years of Industry Experience', counterTarget: 25 },
+  { key: 'plans', value: '1,000+', label: 'Financial Plans Designed', counterTarget: 1000 },
+  { key: 'independent', value: 'Independent', label: 'Client-First Advisory Model' },
+  { key: 'ongoing', value: 'Ongoing', label: 'Reviews & Strategy Adjustments' },
 ] as const
 
 const CLIENT_SEGMENTS = [
@@ -21,27 +22,27 @@ const CLIENT_SEGMENTS = [
     icon: 'Work',
     title: 'Working Professionals',
     description:
-      'Individuals focused on protecting income, reducing taxes, and building long-term financial security.',
+      'Protect income, reduce taxes, and build durable long-term wealth with a plan that fits your life.',
   },
   {
     icon: 'Home',
     title: 'Families & Parents',
     description:
-      'Those planning for education, protection, and ensuring their family’s lifestyle is secure no matter what happens.',
+      'Plan for education, family protection, and a secure lifestyle through every stage of life.',
   },
   {
     icon: 'Business',
     title: 'Business Owners',
     description:
-      'Entrepreneurs looking for succession planning, key-person protection, and smarter tax strategies.',
+      'Strengthen succession planning, key-person coverage, and tax strategy to protect business value.',
   },
 ] as const
 
 const PROCESS_STEPS = [
-  'Discovery: We understand your goals, concerns, and current situation.',
-  'Design: We build strategies tailored to your income, lifestyle, and timeline.',
-  'Implementation: Solutions are put in place carefully and transparently.',
-  'Review: Plans evolve as your life and priorities change.',
+  'Discovery: Clarify goals, concerns, cash flow, and timeline.',
+  'Design: Build a personalized strategy across protection, retirement, and tax efficiency.',
+  'Implementation: Put recommendations in place with transparent guidance.',
+  'Review: Recalibrate annually as life, markets, and priorities change.',
 ] as const
 
 const SERVICE_CARDS = [
@@ -242,17 +243,122 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
   const excerpt = homePage ? plainTextFromHtml(homePage.excerpt).replace(/\s+/g, ' ').trim() : ''
   const excerptLooksNoisy = /start free consultation|request plan review|choose your path/i.test(excerpt)
   const cleanedExcerpt = excerptLooksNoisy ? '' : excerpt
+  const trustGridRef = useRef<HTMLDivElement | null>(null)
+  const hasAnimatedTrustRef = useRef(false)
+  const [trustRollStarted, setTrustRollStarted] = useState(false)
+  const [trustCounters, setTrustCounters] = useState({ years: 0, plans: 0 })
 
   const summary =
     cleanedExcerpt.length > 0
       ? `${cleanedExcerpt.slice(0, 220).replace(/\s+\S*$/, '')}...`
       : 'Tax-efficient planning, risk-aware guidance, and implementation support designed for people who want clarity instead of confusion.'
 
-  const backendMessage = loading
-    ? 'Syncing live backend content...'
-    : error
-      ? 'Live backend feed unavailable. Displaying optimized homepage experience.'
-      : `Live backend connected · Updated ${formatDate(homePage?.modified ?? new Date().toISOString())}`
+  useEffect(() => {
+    if (trustRollStarted || (loading && !homePage)) {
+      return
+    }
+
+    const node = trustGridRef.current
+    if (!node) {
+      return
+    }
+
+    const triggerRoll = () => setTrustRollStarted(true)
+
+    const checkVisibility = () => {
+      const rect = node.getBoundingClientRect()
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight
+      const visible = rect.top < viewportHeight * 0.9 && rect.bottom > viewportHeight * 0.15
+      if (visible) {
+        triggerRoll()
+      }
+    }
+
+    const observer =
+      'IntersectionObserver' in window
+        ? new IntersectionObserver(
+            (entries) => {
+              if (entries.some((entry) => entry.isIntersecting || entry.intersectionRatio > 0.12)) {
+                triggerRoll()
+              }
+            },
+            {
+              threshold: [0.12, 0.25, 0.4],
+              rootMargin: '0px 0px -10% 0px',
+            },
+          )
+        : null
+
+    observer?.observe(node)
+    window.addEventListener('scroll', checkVisibility, { passive: true })
+    window.addEventListener('resize', checkVisibility)
+
+    const visibilityCheckId = window.setTimeout(checkVisibility, 80)
+    const fallbackId = window.setTimeout(triggerRoll, 5000)
+
+    return () => {
+      observer?.disconnect()
+      window.removeEventListener('scroll', checkVisibility)
+      window.removeEventListener('resize', checkVisibility)
+      window.clearTimeout(visibilityCheckId)
+      window.clearTimeout(fallbackId)
+    }
+  }, [trustRollStarted, loading, homePage])
+
+  useEffect(() => {
+    if (!trustRollStarted || hasAnimatedTrustRef.current) {
+      return
+    }
+
+    hasAnimatedTrustRef.current = true
+    const duration = 1800
+    const startedAt = Date.now()
+
+    const tick = () => {
+      const elapsed = Date.now() - startedAt
+      const progress = Math.min(elapsed / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+
+      setTrustCounters({
+        years: Math.round(25 * eased),
+        plans: Math.round(1000 * eased),
+      })
+
+      if (progress >= 1) {
+        window.clearInterval(intervalId)
+      }
+    }
+
+    const intervalId = window.setInterval(tick, 16)
+    const finalizeId = window.setTimeout(() => {
+      setTrustCounters({ years: 25, plans: 1000 })
+      window.clearInterval(intervalId)
+    }, duration + 350)
+
+    tick()
+
+    return () => {
+      window.clearInterval(intervalId)
+      window.clearTimeout(finalizeId)
+    }
+  }, [trustRollStarted])
+
+  if (loading && !homePage) {
+    return (
+      <section className="page-state container">
+        <h1>Loading Home...</h1>
+      </section>
+    )
+  }
+
+  if (error && !homePage) {
+    return (
+      <section className="page-state container">
+        <h1>Unable to load Home content</h1>
+        <p>{error}</p>
+      </section>
+    )
+  }
 
   return (
     <article className="home2026">
@@ -260,7 +366,7 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
         <div className="container home2026-hero-grid animate-in">
           <div className="home2026-hero-copy">
             <p className="eyebrow">Advanced Benefit Designs</p>
-            <h1>Financial Planning With 2026 Clarity and High Readability</h1>
+            <h1>Financial Planning With 2026 Clarity and Confidence</h1>
             <p>{summary}</p>
 
             <div className="home2026-cta-row">
@@ -272,31 +378,7 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
               </Link>
             </div>
           </div>
-          <aside className="home2026-hero-panel">
-          <p className="home2026-live-pill">{backendMessage}</p>
 
-          <div className="home2026-kpis">
-            <article>
-              <span>Advisory Approach</span>
-              <strong>Transparent & No-Pressure Guidance</strong>
-            </article>
-
-            <article>
-              <span>Strategy Focus</span>
-              <strong>Tax-Efficient Wealth Planning</strong>
-            </article>
-
-            <article>
-              <span>Advisory Model</span>
-              <strong>Independent & Client-First</strong>
-            </article>
-
-            <article>
-              <span>Initial Consultation</span>
-              <strong>100% Complimentary</strong>
-            </article>
-          </div>
-        </aside>
         </div>
       </section>
 
@@ -332,8 +414,8 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
               <span>Engineered for Confidence</span>
             </h2>
             <p>
-              Tax-efficient strategies. Risk-aware decisions. Designed for people who want clarity,
-              not complexity.
+              Tax-efficient strategy, risk-aware decision-making, and practical guidance for long-term
+              financial confidence.
             </p>
             <div className="home2026-cta-row">
               <Link to="/contact-us" className="btn btn-primary">
@@ -347,8 +429,16 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
 
           <article className="home2026-strategy-card">
             <h3>LET&apos;S BUILD YOUR PLAN</h3>
-            <p>Share a few details and we will reach out with your best-fit strategy.</p>
-            <span className="home2026-strategy-card-line" aria-hidden="true" />
+            <p>Share a few details and we will reach out with your best-fit next steps.</p>
+            
+            <div className="home2026-strategy-form-shell">
+              <iframe
+                src="https://api.leadconnectorhq.com/widget/form/ZRWtcp1dHQbApx7QFGTk"
+                title="ABD strategic plan form"
+                loading="eager"
+                allow="clipboard-read; clipboard-write"
+              />
+            </div>
           </article>
         </div>
       </section>
@@ -356,13 +446,19 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
       <section className="home2026-trust">
         <div className="container">
           <p className="home2026-trust-copy">
-            We don&apos;t believe in one-size-fits-all solutions. Every recommendation is based on
-            your goals, timeline, and comfort with risk, not quotas, commissions, or pressure.
+            We don&apos;t believe in one-size-fits-all solutions. Every recommendation is tailored to
+            your goals, timeline, and comfort with risk, never quotas or pressure.
           </p>
-          <div className="home2026-trust-grid">
+          <div className="home2026-trust-grid" ref={trustGridRef}>
             {TRUST_STATS.map((item) => (
               <article key={item.label}>
-                <strong>{item.value}</strong>
+                <strong>
+                  {item.key === 'years'
+                    ? `${trustCounters.years.toLocaleString('en-US')}+`
+                    : item.key === 'plans'
+                      ? `${trustCounters.plans.toLocaleString('en-US')}+`
+                      : item.value}
+                </strong>
                 <span>{item.label}</span>
               </article>
             ))}
