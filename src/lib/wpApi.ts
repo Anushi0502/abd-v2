@@ -1,4 +1,5 @@
 import { WP_API_ORIGIN } from '../constants'
+import { getFallbackContentIndex } from './fallbackContent'
 import type { ContentIndex, ContentType, WpRecord } from '../types'
 
 interface WpApiEntry {
@@ -277,7 +278,7 @@ export const fetchContentIndex = async (
 
   try {
     return await cachedIndexPromise
-  } catch (error) {
+  } catch {
     const stalePersisted = readPersistedContentIndex(true)
     if (stalePersisted) {
       const sanitized = sanitizeContentIndex(stalePersisted)
@@ -286,7 +287,10 @@ export const fetchContentIndex = async (
       return sanitized
     }
 
-    throw error
+    const fallback = sanitizeContentIndex(getFallbackContentIndex())
+    cachedIndex = fallback
+    writePersistedContentIndex(fallback)
+    return fallback
   } finally {
     cachedIndexPromise = null
   }

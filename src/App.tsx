@@ -71,8 +71,7 @@ const AppShell = () => {
 
   const homePage = pageLookup.get('home') ?? null
   const retirementCalculatorPage = pageLookup.get('retirement-calculator') ?? null
-  const hasContent = pages.length > 0 || posts.length > 0
-  const routeError = hasContent ? null : error
+  const routeError = null
   const lastUpdatedLabel = useMemo(() => {
     if (!lastUpdated) {
       return null
@@ -84,32 +83,16 @@ const AppShell = () => {
     }).format(lastUpdated)
   }, [lastUpdated])
 
-  if (error && !loading && !hasContent) {
-    return (
-      <Layout>
-        <section className="page-state container">
-          <h1>Unable to load live website content</h1>
-          <p>{error}</p>
-          <p>
-            <button type="button" className="btn btn-primary" onClick={refresh}>
-              Retry Connection
-            </button>
-          </p>
-        </section>
-      </Layout>
-    )
-  }
-
   return (
     <Layout>
-      {error && hasContent && !loading && (
+      {error && !loading && (
         <section className="container content-sync-banner" role="status">
-          <p>Showing cached content while live sync is unavailable: {error}</p>
+          <p>Live sync is unavailable. Showing fallback content: {error}</p>
           <div className="content-sync-actions">
             <button type="button" className="btn btn-outline" onClick={refresh}>
               Retry Sync
             </button>
-            {lastUpdatedLabel && <span>Last successful sync: {lastUpdatedLabel}</span>}
+            {lastUpdatedLabel && <span>Last content refresh: {lastUpdatedLabel}</span>}
           </div>
         </section>
       )}
