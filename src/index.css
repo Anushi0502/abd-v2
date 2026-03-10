@@ -4074,15 +4074,37 @@ h4 {
 
 /* Mobile responsiveness hardening */
 @media (max-width: 1100px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .site-nav-shell {
+    background:
+      radial-gradient(34rem 20rem at 96% -40%, rgba(106, 255, 131, 0.22), transparent 58%),
+      linear-gradient(130deg, #0b2a89 0%, #1544a9 52%, #207601 100%);
+    border-bottom: 1px solid rgba(225, 239, 255, 0.34);
+    box-shadow: 0 14px 28px rgba(8, 28, 92, 0.28);
+  }
+
   .site-nav-row {
     grid-template-columns: auto 1fr auto;
     min-height: 76px;
     gap: 0.65rem;
+    padding-inline: 0.1rem;
   }
 
   .site-nav,
   .site-signup {
     display: none;
+  }
+
+  .brand-link {
+    border-radius: 11px;
+    border: 1px solid rgba(235, 246, 255, 0.35);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    padding: 0.22rem 0.42rem;
   }
 
   .mobile-menu-toggle {
@@ -4095,9 +4117,12 @@ h4 {
     height: 42px;
     padding: 0;
     border-radius: 10px;
-    border: 1px solid rgba(12, 38, 120, 0.2);
-    background: rgba(255, 255, 255, 0.94);
-    box-shadow: 0 10px 20px rgba(10, 37, 117, 0.1);
+    justify-self: end;
+    margin-inline-start: auto;
+    margin-right: 0.18rem;
+    border: 1px solid rgba(240, 249, 255, 0.5);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.14));
+    box-shadow: 0 12px 24px rgba(7, 25, 82, 0.34);
   }
 
   .mobile-menu-toggle span {
@@ -4105,7 +4130,7 @@ h4 {
     width: 18px;
     height: 2px;
     border-radius: 999px;
-    background: #0d2b8d;
+    background: #ffffff;
     transition: transform 0.22s ease, opacity 0.22s ease;
   }
 
@@ -4123,7 +4148,10 @@ h4 {
 
   .mobile-menu {
     display: none;
-    border-top: 1px solid rgba(12, 38, 120, 0.12);
+    border-top: 1px solid rgba(235, 246, 255, 0.3);
+    background:
+      radial-gradient(28rem 20rem at -12% 0%, rgba(122, 229, 94, 0.2), transparent 60%),
+      linear-gradient(160deg, #0b2e93 0%, #1548b2 55%, #1d8614 100%);
     padding: 0.52rem 0 0.95rem;
   }
 
@@ -4133,18 +4161,64 @@ h4 {
 
   .mobile-menu-grid.container {
     width: min(100vw - 1.2rem, 720px);
+    max-width: 100%;
     gap: 0.7rem;
+  }
+
+  .mobile-menu-grid section {
+    min-width: 0;
+    border-radius: 14px;
+    border: 1px solid rgba(225, 239, 255, 0.3);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    padding: 0.82rem;
+  }
+
+  .mobile-menu-grid h3 {
+    color: #ffffff;
+    letter-spacing: 0.02em;
+  }
+
+  .mobile-menu a {
+    color: rgba(243, 248, 255, 0.96);
+    border-bottom: 1px dashed rgba(225, 239, 255, 0.38);
+    padding: 0.64rem 0.2rem;
+  }
+
+  .mobile-menu p {
+    color: rgba(233, 243, 255, 0.9);
+  }
+
+  .mobile-menu a:hover,
+  .mobile-menu a.active {
+    background: linear-gradient(130deg, rgba(255, 255, 255, 0.22), rgba(183, 255, 175, 0.2));
+    border-radius: 10px;
+    border-bottom-color: transparent;
+    color: #ffffff;
+    padding-left: 0.52rem;
+    padding-right: 0.52rem;
   }
 }
 
 @media (max-width: 900px) {
   .container,
   .page2026 .container {
-    width: min(100vw - 1.1rem, 1240px);
+    width: min(100vw - 1.18rem, 1240px);
   }
 
   .home2026 {
     padding-bottom: 1.6rem;
+  }
+
+  .page2026 :is(p, li) {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    letter-spacing: 0.005em;
+  }
+
+  .page2026 :is(h1, h2, h3, h4) {
+    line-height: 1.2;
+    letter-spacing: -0.012em;
   }
 
   .home2026-hero-grid,
@@ -4167,6 +4241,20 @@ h4 {
   .enhanced-hero,
   .ret-calc-hero {
     border-radius: 18px;
+    padding: 1rem;
+  }
+
+  .home2026-service-item,
+  .home2026-path-card,
+  .home2026-trust-grid article,
+  .home2026-segment-grid article,
+  .home2026-process-grid article,
+  .home2026-approach-grid article,
+  .home2026-misconception-grid article,
+  .home2026-faq-item {
+    background:
+      radial-gradient(150% 120% at 0% 0%, rgba(154, 228, 133, 0.18), transparent 52%),
+      linear-gradient(160deg, #ffffff, #f5f9ff);
   }
 
   .home2026-testimonial-card {
@@ -4191,7 +4279,7 @@ h4 {
 @media (max-width: 700px) {
   .container,
   .page2026 .container {
-    width: min(100vw - 0.95rem, 1240px);
+    width: min(100vw - 0.9rem, 1240px);
   }
 
   .home2026-hero-copy h1 {
@@ -4202,7 +4290,7 @@ h4 {
   .home2026-hero-copy p,
   .home2026-strategy-copy p,
   .home2026-final-cta-inner p {
-    font-size: 0.98rem;
+    font-size: 1rem;
   }
 
   .home2026-cta-row {
@@ -4265,6 +4353,7 @@ h4 {
 
 @media (max-width: 480px) {
   .site-nav-row {
+    grid-template-columns: auto minmax(0, 1fr) auto;
     min-height: 70px;
     gap: 0.48rem;
   }
@@ -4275,6 +4364,12 @@ h4 {
 
   .mobile-menu-grid.container {
     width: min(100vw - 0.95rem, 640px);
+  }
+
+  .mobile-menu-toggle {
+    width: 44px;
+    height: 44px;
+    margin-right: 0.2rem;
   }
 
   .mobile-menu a {
