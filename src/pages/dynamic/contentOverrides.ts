@@ -6,7 +6,7 @@ const PROFILE_IMAGE_URL =
 const LOCATION_IMAGE_URL =
   'https://advancedbenefitdesigns.com/wp-content/uploads/2026/03/abd-company-location.jpeg'
 
-const ABOUT_SLUGS = new Set(['financial-company', 'about-us-copy', 'about-us'])
+const ABOUT_SLUGS = new Set(['financial-company', 'about-us'])
 
 const replaceAll = (content: string, pattern: RegExp, next: string) => {
   return content.replace(pattern, next)

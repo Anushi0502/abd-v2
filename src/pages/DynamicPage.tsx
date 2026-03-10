@@ -21,6 +21,8 @@ const estimateReadingMinutes = (text: string) => {
   return Math.max(1, Math.ceil(words / 220))
 }
 
+const EXCLUDED_CONTINUE_EXPLORING_SLUGS = new Set(['about-us-copy'])
+
 const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPageProps) => {
   if (loading) {
     return (
@@ -146,7 +148,10 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
             <h3>Continue Exploring</h3>
             <div className="route-list-compact">
               {suggestedPages
-                .filter((page) => page.slug !== entity.slug)
+                .filter(
+                  (page) =>
+                    page.slug !== entity.slug && !EXCLUDED_CONTINUE_EXPLORING_SLUGS.has(page.slug)
+                )
                 .slice(0, 4)
                 .map((page) => (
                   <Link key={page.id} to={`/${page.slug}`}>

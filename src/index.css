@@ -3514,9 +3514,23 @@ h4 {
 
 .rail-cta {
   border-color: rgba(17, 161, 43, 0.26);
-  background:
-    radial-gradient(circle at 88% 8%, rgba(17, 161, 43, 0.16), transparent 44%),
-    linear-gradient(165deg, #ffffff, #f4fff7);
+  background: linear-gradient(180deg, #2b448f 0%, #28408a 36%, #f5f9ff 36%, #f4fff7 100%);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.rail-cta h3 {
+  color: #ffffff;
+  font-size: 1.08rem;
+}
+
+.rail-cta p {
+  color: #344a63;
+  margin: 0;
+}
+
+.rail-cta .btn {
+  justify-self: start;
 }
 
 .route-list-compact a {
@@ -3835,8 +3849,8 @@ h4 {
   }
 
   .rail-cta-sticky {
-    position: sticky;
-    top: 110px;
+    position: static;
+    top: auto;
   }
 }
 

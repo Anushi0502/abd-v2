@@ -32,6 +32,7 @@ const WP_API_TIMEOUT_MS = 12000
 const MAX_RETRY_ATTEMPTS = 1
 const CONTENT_INDEX_SESSION_KEY = 'abd-content-index-v1'
 const CONTENT_INDEX_MAX_AGE_MS = 10 * 60 * 1000
+const REMOVED_PAGE_SLUGS = new Set(['about-us-copy'])
 const isBrowser = typeof window !== 'undefined'
 
 const decodeEntity = (value: string): string => {
@@ -55,6 +56,19 @@ const normalizeEntry = (entry: WpApiEntry, type: ContentType): WpRecord => {
     date: entry.date,
     modified: entry.modified,
     type,
+  }
+}
+
+const sanitizeContentIndex = (index: ContentIndex): ContentIndex => {
+  const pages = index.pages.filter((entry) => !REMOVED_PAGE_SLUGS.has(entry.slug.toLowerCase()))
+
+  if (pages.length === index.pages.length) {
+    return index
+  }
+
+  return {
+    pages,
+    posts: index.posts,
   }
 }
 
@@ -227,14 +241,18 @@ export const fetchContentIndex = async (
   }
 
   if (cachedIndex) {
-    return cachedIndex
+    const sanitized = sanitizeContentIndex(cachedIndex)
+    cachedIndex = sanitized
+    return sanitized
   }
 
   if (!options.forceRefresh) {
     const persisted = readPersistedContentIndex()
     if (persisted) {
-      cachedIndex = persisted
-      return persisted
+      const sanitized = sanitizeContentIndex(persisted)
+      cachedIndex = sanitized
+      writePersistedContentIndex(sanitized)
+      return sanitized
     }
   }
 
@@ -251,7 +269,7 @@ export const fetchContentIndex = async (
     const pages = rawPages.map((entry) => normalizeEntry(entry, 'page'))
     const posts = rawPosts.map((entry) => normalizeEntry(entry, 'post'))
 
-    const nextIndex = { pages, posts }
+    const nextIndex = sanitizeContentIndex({ pages, posts })
     cachedIndex = nextIndex
     writePersistedContentIndex(nextIndex)
     return nextIndex
@@ -262,8 +280,10 @@ export const fetchContentIndex = async (
   } catch (error) {
     const stalePersisted = readPersistedContentIndex(true)
     if (stalePersisted) {
-      cachedIndex = stalePersisted
-      return stalePersisted
+      const sanitized = sanitizeContentIndex(stalePersisted)
+      cachedIndex = sanitized
+      writePersistedContentIndex(sanitized)
+      return sanitized
     }
 
     throw error
