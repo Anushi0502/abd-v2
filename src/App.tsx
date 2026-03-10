@@ -3,10 +3,11 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Layout from './components/Layout'
 import { resolveAliasSlug } from './lib/html'
 import { useContentIndex } from './hooks/useContentIndex'
-import BlogsPage from './pages/BlogsPage'
-import DynamicPage from './pages/DynamicPage'
-import HomePage from './pages/HomePage'
-import RetirementCalculatorPage from './pages/RetirementCalculatorPage'
+import BlogsPage from './pages/blogs'
+import DynamicPage from './pages/dynamic'
+import { DYNAMIC_ROUTE_COMPONENTS } from './pages/dynamic/routeRegistry'
+import HomePage from './pages/home'
+import RetirementCalculatorPage from './pages/retirement'
 import type { WpRecord } from './types'
 
 interface DynamicRouteResolverProps {
@@ -57,44 +58,11 @@ const DynamicRouteResolver = ({
 }
 
 const AppShell = () => {
-  const { pages, posts, loading, error, refresh, lastUpdated } = useContentIndex()
-  const pageLookup = useMemo(() => {
-    return new Map(pages.map((entry) => [entry.slug.toLowerCase(), entry]))
-  }, [pages])
-  const postLookup = useMemo(() => {
-    return new Map(posts.map((entry) => [entry.slug.toLowerCase(), entry]))
-  }, [posts])
+  const { pages, posts, loading, error } = useContentIndex()
 
-  const homePage = pageLookup.get('home') ?? null
-  const retirementCalculatorPage = pageLookup.get('retirement-calculator') ?? null
-  const hasContent = pages.length > 0 || posts.length > 0
-  const routeError = hasContent ? null : error
-  const lastUpdatedLabel = useMemo(() => {
-    if (!lastUpdated) {
-      return null
-    }
-
-    return new Intl.DateTimeFormat('en-US', {
-      dateStyle: 'medium',
-      timeStyle: 'short',
-    }).format(lastUpdated)
-  }, [lastUpdated])
-
-  if (error && !loading && !hasContent) {
-    return (
-      <Layout>
-        <section className="page-state container">
-          <h1>Unable to load live website content</h1>
-          <p>{error}</p>
-          <p>
-            <button type="button" className="btn btn-primary" onClick={refresh}>
-              Retry Connection
-            </button>
-          </p>
-        </section>
-      </Layout>
-    )
-  }
+  const homePage = pages.find((entry) => entry.slug === 'home') ?? null
+  const retirementCalculatorPage =
+    pages.find((entry) => entry.slug === 'retirement-calculator') ?? null
 
   return (
     <Layout>
@@ -127,6 +95,21 @@ const AppShell = () => {
           }
         />
         <Route path="/blogs" element={<BlogsPage posts={posts} loading={loading} />} />
+        {dedicatedDynamicRoutes.map(([slug, RouteComponent]) => (
+          <Route
+            key={slug}
+            path={`/${slug}`}
+            element={
+              <RouteComponent
+                slug={slug}
+                entity={pageBySlug.get(slug) ?? postBySlug.get(slug) ?? null}
+                loading={loading}
+                error={error}
+                suggestedPages={pages}
+              />
+            }
+          />
+        ))}
         <Route
           path="*"
           element={

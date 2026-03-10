@@ -65,10 +65,10 @@ const BlogsPage = ({ posts, loading }: BlogsPageProps) => {
   }
 
   return (
-    <section className="blogs-page">
-      <div className="container enhanced-hero animate-in">
+    <section className="blogs-page page2026 page2026-blogs">
+      <div className="container enhanced-hero page2026-hero animate-in">
         <p className="eyebrow">Insights Hub</p>
-        <h1>ABD Blogs</h1>
+        <h1>ABD Strategy Insights</h1>
         <p>
           High-signal content on tax-aware planning, retirement confidence, and protection strategy.
         </p>

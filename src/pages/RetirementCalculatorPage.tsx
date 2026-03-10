@@ -330,8 +330,8 @@ const RetirementCalculatorPage = ({ entity, loading, error }: RetirementCalculat
   }
 
   return (
-    <article className="ret-calc-page">
-      <section className="container ret-calc-hero ret-calc-hero-grid">
+    <article className="ret-calc-page page2026 page2026-retcalc">
+      <section className="container ret-calc-hero ret-calc-hero-grid page2026-hero">
         <div className="ret-calc-hero-copy">
           <p className="eyebrow">Retirement Intelligence</p>
           <h1>{entity?.title ?? 'Retirement Calculator'}</h1>
