@@ -4419,3 +4419,29 @@ h4 {
     font-size: 0.68rem;
   }
 }
+
+/* Final services dropdown palette lock: blue + #207601 only */
+.site-nav .site-dropdown .dropdown-panel {
+  background: linear-gradient(
+      145deg,
+      rgba(11, 42, 137, 0.98) 0%,
+      rgba(24, 85, 198, 0.96) 52%,
+      rgba(32, 118, 1, 0.92) 100%
+    )
+    !important;
+  border: 1px solid rgba(198, 225, 255, 0.45) !important;
+  box-shadow: 0 20px 36px rgba(7, 23, 74, 0.3);
+}
+
+.site-nav .site-dropdown .dropdown-panel a {
+  color: #eff6ff !important;
+  border: 1px solid transparent;
+}
+
+.site-nav .site-dropdown .dropdown-panel a:hover,
+.site-nav .site-dropdown .dropdown-panel a.active,
+.site-nav .site-dropdown .dropdown-panel .active {
+  background: linear-gradient(130deg, rgba(30, 95, 219, 0.55), rgba(32, 118, 1, 0.42)) !important;
+  border-color: rgba(214, 236, 255, 0.45) !important;
+  color: #ffffff !important;
+}
