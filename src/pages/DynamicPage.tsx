@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import ContactFormPanel from '../components/ContactFormPanel'
 import RichContent from '../components/RichContent'
@@ -120,7 +119,7 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages, posts }: Dy
     )
   }
 
-  const { html: enhancedContent, toc } = useMemo(() => buildContentWithOutline(entity.content), [entity.content])
+  const { html: enhancedContent, toc } = buildContentWithOutline(entity.content)
   const excerptText = plainTextFromHtml(entity.excerpt)
   const contentText = plainTextFromHtml(entity.content)
   const highlights = extractHighlights(entity.content, 7)
@@ -139,29 +138,27 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages, posts }: Dy
   const railHighlights = highlights.length > 0 ? highlights.slice(0, 6) : heroHighlights
   const readingMinutes = estimateReadingMinutes(contentText)
   const pageSlugClass = `page-${entity.slug.replace(/[^a-z0-9-]+/gi, '-').toLowerCase()}`
-  const latestBlogs = useMemo(() => {
-    return [...posts]
-      .filter((post) => post.slug !== entity.slug)
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, 8)
-      .map((post) => {
-        const excerpt = plainTextFromHtml(post.excerpt).trim()
-        const fallbackText = excerpt.length > 0 ? excerpt : plainTextFromHtml(post.content).trim()
-        const snippet =
-          fallbackText.length > 118
-            ? `${fallbackText.slice(0, 115).replace(/\s+\S*$/, '')}...`
-            : fallbackText
+  const latestBlogs = [...posts]
+    .filter((post) => post.slug !== entity.slug)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 8)
+    .map((post) => {
+      const excerpt = plainTextFromHtml(post.excerpt).trim()
+      const fallbackText = excerpt.length > 0 ? excerpt : plainTextFromHtml(post.content).trim()
+      const snippet =
+        fallbackText.length > 118
+          ? `${fallbackText.slice(0, 115).replace(/\s+\S*$/, '')}...`
+          : fallbackText
 
-        return {
-          id: post.id,
-          slug: post.slug,
-          title: post.title,
-          date: post.date,
-          snippet,
-          image: extractFirstImageSrc(post.content),
-        }
-      })
-  }, [entity.slug, posts])
+      return {
+        id: post.id,
+        slug: post.slug,
+        title: post.title,
+        date: post.date,
+        snippet,
+        image: extractFirstImageSrc(post.content),
+      }
+    })
 
   return (
     <article className={`enhanced-page page2026 page2026-dynamic ${pageSlugClass}`}>
