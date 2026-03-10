@@ -1,4 +1,4 @@
-﻿import { useMemo, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { formatDate, plainTextFromHtml } from '../lib/html'
 import type { WpRecord } from '../types'
@@ -8,38 +8,53 @@ interface BlogsPageProps {
   loading: boolean
 }
 
-const excerptForCard = (entry: WpRecord) => {
-  const fromExcerpt = plainTextFromHtml(entry.excerpt)
-  const fromContent = plainTextFromHtml(entry.content)
-  const best = fromExcerpt || fromContent
+interface IndexedPost {
+  post: WpRecord
+  summary: string
+  searchableText: string
+  timestamp: number
+}
+
+const buildSummary = (excerpt: string, content: string) => {
+  const best = excerpt || content
   return best.length > 180 ? `${best.slice(0, 177)}...` : best
+}
+
+const buildIndexEntry = (post: WpRecord): IndexedPost => {
+  const excerptText = plainTextFromHtml(post.excerpt)
+  const contentText = plainTextFromHtml(post.content)
+  const timestamp = new Date(post.date).getTime()
+
+  return {
+    post,
+    summary: buildSummary(excerptText, contentText),
+    searchableText: `${post.title} ${excerptText} ${contentText}`.toLowerCase(),
+    timestamp: Number.isNaN(timestamp) ? 0 : timestamp,
+  }
 }
 
 const BlogsPage = ({ posts, loading }: BlogsPageProps) => {
   const [query, setQuery] = useState('')
+  const deferredQuery = useDeferredValue(query)
 
-  const sortedPosts = useMemo(() => {
-    return [...posts].sort((left, right) => {
-      return new Date(right.date).getTime() - new Date(left.date).getTime()
-    })
+  const indexedPosts = useMemo(() => {
+    return posts
+      .map((post) => buildIndexEntry(post))
+      .sort((left, right) => right.timestamp - left.timestamp)
   }, [posts])
 
   const filteredPosts = useMemo(() => {
-    const normalized = query.trim().toLowerCase()
+    const normalized = deferredQuery.trim().toLowerCase()
     if (!normalized) {
-      return sortedPosts
+      return indexedPosts
     }
 
-    return sortedPosts.filter((post) => {
-      const title = post.title.toLowerCase()
-      const excerpt = plainTextFromHtml(post.excerpt).toLowerCase()
-      const content = plainTextFromHtml(post.content).toLowerCase()
-      return title.includes(normalized) || excerpt.includes(normalized) || content.includes(normalized)
-    })
-  }, [query, sortedPosts])
+    return indexedPosts.filter((entry) => entry.searchableText.includes(normalized))
+  }, [deferredQuery, indexedPosts])
 
   const featuredPost = filteredPosts[0] ?? null
   const remainingPosts = featuredPost ? filteredPosts.slice(1) : []
+  const resultsLabel = `${filteredPosts.length} ${filteredPosts.length === 1 ? 'article' : 'articles'}`
 
   if (loading) {
     return (
@@ -67,7 +82,7 @@ const BlogsPage = ({ posts, loading }: BlogsPageProps) => {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search by topic, service, or keyword"
           />
-          <span>{filteredPosts.length} article(s)</span>
+          <span>{resultsLabel}</span>
         </div>
       </div>
 
@@ -75,11 +90,11 @@ const BlogsPage = ({ posts, loading }: BlogsPageProps) => {
         <article className="container blog-featured animate-in">
           <div>
             <p className="eyebrow">Featured</p>
-            <h2>{featuredPost.title}</h2>
-            <p>{excerptForCard(featuredPost)}</p>
+            <h2>{featuredPost.post.title}</h2>
+            <p>{featuredPost.summary}</p>
             <div className="blog-featured-meta">
-              <span>{formatDate(featuredPost.date)}</span>
-              <Link to={`/${featuredPost.slug}`} className="btn btn-primary">
+              <span>{formatDate(featuredPost.post.date)}</span>
+              <Link to={`/${featuredPost.post.slug}`} className="btn btn-primary">
                 Read Featured Article
               </Link>
             </div>
@@ -94,12 +109,12 @@ const BlogsPage = ({ posts, loading }: BlogsPageProps) => {
 
       {remainingPosts.length > 0 && (
         <div className="container card-grid">
-          {remainingPosts.map((post) => (
-            <article key={post.id} className="card-grid-item animate-in">
-              <p className="card-date">{formatDate(post.date)}</p>
-              <h2>{post.title}</h2>
-              <p>{excerptForCard(post)}</p>
-              <Link to={`/${post.slug}`} className="btn btn-outline">
+          {remainingPosts.map((entry) => (
+            <article key={entry.post.id} className="card-grid-item animate-in">
+              <p className="card-date">{formatDate(entry.post.date)}</p>
+              <h2>{entry.post.title}</h2>
+              <p>{entry.summary}</p>
+              <Link to={`/${entry.post.slug}`} className="btn btn-outline">
                 Read Article
               </Link>
             </article>

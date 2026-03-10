@@ -1,6 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { fetchContentIndex } from '../lib/wpApi'
 import type { ContentState } from '../types'
+
+interface UseContentIndexState extends ContentState {
+  refresh: () => void
+  lastUpdated: number | null
+}
 
 const initialState: ContentState = {
   pages: [],
@@ -9,26 +14,47 @@ const initialState: ContentState = {
   error: null,
 }
 
-export const useContentIndex = () => {
+export const useContentIndex = (): UseContentIndexState => {
   const [state, setState] = useState<ContentState>(initialState)
+  const [refreshVersion, setRefreshVersion] = useState(0)
+  const [lastUpdated, setLastUpdated] = useState<number | null>(null)
+
+  const refresh = useCallback(() => {
+    setState((current) => ({
+      ...current,
+      loading: true,
+      error: null,
+    }))
+    setRefreshVersion((current) => current + 1)
+  }, [])
 
   useEffect(() => {
     let isCancelled = false
 
     const load = async () => {
       try {
-        const content = await fetchContentIndex()
+        const content = await fetchContentIndex({
+          forceRefresh: refreshVersion > 0,
+        })
+
         if (!isCancelled) {
-          setState({ ...content, loading: false, error: null })
+          setState({
+            ...content,
+            loading: false,
+            error: null,
+          })
+          setLastUpdated(Date.now())
         }
       } catch (error) {
         if (!isCancelled) {
-          setState({
-            pages: [],
-            posts: [],
+          const message = error instanceof Error ? error.message : 'Unable to load website content.'
+
+          setState((current) => ({
+            pages: current.pages,
+            posts: current.posts,
             loading: false,
-            error: error instanceof Error ? error.message : 'Unable to load website content.',
-          })
+            error: message,
+          }))
         }
       }
     }
@@ -38,7 +64,11 @@ export const useContentIndex = () => {
     return () => {
       isCancelled = true
     }
-  }, [])
+  }, [refreshVersion])
 
-  return state
+  return {
+    ...state,
+    refresh,
+    lastUpdated,
+  }
 }

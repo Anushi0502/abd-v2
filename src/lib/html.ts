@@ -7,6 +7,12 @@ interface TransformOptions {
 }
 
 const stripTrailingSlash = (value: string) => value.replace(/\/+$/, '')
+const BLOCKED_INTERNAL_LINK_PREFIX = /^(mailto:|tel:|#|javascript:|data:)/i
+const DATE_FORMATTER = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+})
 
 export const normalizePathname = (pathname: string) => {
   if (!pathname) {
@@ -22,37 +28,34 @@ export const resolveAliasSlug = (slug: string): string => {
 }
 
 export const toInternalPath = (input: string): string | null => {
-  if (!input) {
+  const trimmedInput = input.trim()
+  if (!trimmedInput) {
     return null
   }
 
-  if (input.startsWith('mailto:') || input.startsWith('tel:') || input.startsWith('#')) {
-    return null
-  }
-
-  if (input.startsWith('/')) {
-    const normalized = resolveAliasSlug(input)
-    return normalized ? `/${normalized}` : '/home'
-  }
-
-  if (!input.startsWith('http://') && !input.startsWith('https://')) {
+  if (BLOCKED_INTERNAL_LINK_PREFIX.test(trimmedInput)) {
     return null
   }
 
   try {
-    const url = new URL(input)
+    const url = new URL(trimmedInput, SITE_ORIGIN)
     if (stripTrailingSlash(url.origin) !== stripTrailingSlash(SITE_ORIGIN)) {
       return null
     }
 
     const normalized = resolveAliasSlug(url.pathname)
-    return normalized ? `/${normalized}` : '/home'
+    const targetPath = normalized ? `/${normalized}` : '/home'
+    return `${targetPath}${url.search}${url.hash}`
   } catch {
     return null
   }
 }
 
 export const plainTextFromHtml = (html: string): string => {
+  if (!html) {
+    return ''
+  }
+
   const parser = new DOMParser()
   const parsed = parser.parseFromString(html, 'text/html')
   return (parsed.body.textContent ?? '').replace(/\s+/g, ' ').trim()
@@ -194,11 +197,12 @@ export const transformContentHtml = (rawHtml: string, options: TransformOptions 
 
 export const formatDate = (iso: string): string => {
   try {
-    return new Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    }).format(new Date(iso))
+    const parsed = new Date(iso)
+    if (Number.isNaN(parsed.getTime())) {
+      return iso
+    }
+
+    return DATE_FORMATTER.format(parsed)
   } catch {
     return iso
   }

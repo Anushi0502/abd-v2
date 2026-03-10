@@ -18,7 +18,7 @@ const estimateReadingMinutes = (text: string) => {
     .map((entry) => entry.trim())
     .filter(Boolean).length
 
-  return Math.max(1, Math.round(words / 220))
+  return Math.max(1, Math.ceil(words / 220))
 }
 
 const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPageProps) => {
@@ -57,9 +57,11 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
     )
   }
 
+  const excerptText = plainTextFromHtml(entity.excerpt)
+  const contentText = plainTextFromHtml(entity.content)
   const highlights = extractHighlights(entity.content, 7)
-  const summaryText = plainTextFromHtml(entity.excerpt) || plainTextFromHtml(entity.content).slice(0, 260)
-  const readingMinutes = estimateReadingMinutes(plainTextFromHtml(entity.content))
+  const summaryText = excerptText || contentText.slice(0, 260)
+  const readingMinutes = estimateReadingMinutes(contentText)
 
   return (
     <article className="enhanced-page">
@@ -100,11 +102,15 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
         <aside className="enhanced-rail animate-in">
           <div className="rail-card">
             <h3>Key Takeaways</h3>
-            <ul>
-              {highlights.slice(0, 6).map((highlight) => (
-                <li key={highlight}>{highlight}</li>
-              ))}
-            </ul>
+            {highlights.length > 0 ? (
+              <ul>
+                {highlights.slice(0, 6).map((highlight) => (
+                  <li key={highlight}>{highlight}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>No summary highlights available for this page yet.</p>
+            )}
           </div>
 
           <div className="rail-card rail-cta rail-cta-sticky">

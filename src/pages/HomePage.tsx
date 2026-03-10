@@ -118,3 +118,4 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
 }
 
 export default HomePage
+

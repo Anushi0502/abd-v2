@@ -12,6 +12,33 @@ interface RichContentProps {
   executeScripts?: boolean
 }
 
+const shouldBypassInternalNavigation = (event: MouseEvent, anchor: HTMLAnchorElement) => {
+  if (event.defaultPrevented || event.button !== 0) {
+    return true
+  }
+
+  if (event.metaKey || event.altKey || event.ctrlKey || event.shiftKey) {
+    return true
+  }
+
+  const target = anchor.getAttribute('target')
+  if (target && target.toLowerCase() !== '_self') {
+    return true
+  }
+
+  return false
+}
+
+const createHtmlSignature = (value: string): string => {
+  let hash = 0
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) | 0
+  }
+
+  return `${value.length}:${Math.abs(hash)}`
+}
+
 const RichContent = ({
   html,
   className,
@@ -33,6 +60,9 @@ const RichContent = ({
       preserveIframes,
     })
   }, [html, preserveStyles, preserveIframes, unsafeRaw])
+  const htmlSignature = useMemo(() => {
+    return createHtmlSignature(html)
+  }, [html])
 
   useEffect(() => {
     const node = containerRef.current
@@ -48,6 +78,10 @@ const RichContent = ({
 
       const anchor = target.closest('a[href]')
       if (!(anchor instanceof HTMLAnchorElement)) {
+        return
+      }
+
+      if (shouldBypassInternalNavigation(event, anchor)) {
         return
       }
 
@@ -84,7 +118,7 @@ const RichContent = ({
     const windowWithRegistry = window as Window & {
       __abdExecutedHtmlScripts?: Record<string, boolean>
     }
-    const signature = `${className ?? 'default'}-${html.length}`
+    const signature = `${className ?? 'default'}:${htmlSignature}`
 
     if (!windowWithRegistry.__abdExecutedHtmlScripts) {
       windowWithRegistry.__abdExecutedHtmlScripts = {}
@@ -105,7 +139,7 @@ const RichContent = ({
       replacement.text = script.textContent ?? ''
       script.replaceWith(replacement)
     })
-  }, [className, executeScripts, html])
+  }, [className, executeScripts, htmlSignature])
 
   return <div ref={containerRef} className={className} dangerouslySetInnerHTML={{ __html: transformed }} />
 }
