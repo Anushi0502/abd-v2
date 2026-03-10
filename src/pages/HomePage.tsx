@@ -79,11 +79,11 @@ const ASSOCIATED_LOGOS = [
     alt: 'Associated organization 8',
   },
   {
-    src: 'https://advancedbenefitdesigns.com/wp-content/uploads/2025/10/2.png',
+    src: '/wp-content/uploads/2025/10/2.png',
     alt: 'Associated organization 9',
   },
   {
-    src: 'https://advancedbenefitdesigns.com/wp-content/uploads/2025/10/1.png',
+    src: '/wp-content/uploads/2025/10/1.png',
     alt: 'Associated organization 10',
   },
 ] as const

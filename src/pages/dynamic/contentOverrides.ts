@@ -1,10 +1,10 @@
 import type { WpRecord } from '../../types'
 
 const PROFILE_IMAGE_URL =
-  'https://advancedbenefitdesigns.com/wp-content/uploads/2025/02/KMS-Head-Shot-21_page-0001-e1772705284359.jpg'
+  '/wp-content/uploads/2025/02/KMS-Head-Shot-21_page-0001-e1772705284359.jpg'
 
 const LOCATION_IMAGE_URL =
-  'https://advancedbenefitdesigns.com/wp-content/uploads/2026/03/abd-company-location.jpeg'
+  '/wp-content/uploads/2026/03/abd-company-location.jpeg'
 
 const ABOUT_SLUGS = new Set(['financial-company', 'about-us'])
 
@@ -82,13 +82,13 @@ const applyAboutImageSwaps = (content: string) => {
 
   next = replaceAll(
     next,
-    /https:\/\/advancedbenefitdesigns\.com\/wp-content\/uploads\/2025\/02\/KMS-Pro-Shot_page-0001(?:-e\d+)?(?:-\d+x\d+)?\.jpg/g,
+    /(?:https:\/\/(?:www\.)?advancedbenefitdesigns\.com)?\/wp-content\/uploads\/2025\/02\/KMS-Pro-Shot_page-0001(?:-e\d+)?(?:-\d+x\d+)?\.jpg/g,
     PROFILE_IMAGE_URL,
   )
 
   next = replaceAll(
     next,
-    /https:\/\/advancedbenefitdesigns\.com\/wp-content\/uploads\/2025\/02\/office-buildings-with-modern-architecture(?:-\d+x\d+)?\.jpg/g,
+    /(?:https:\/\/(?:www\.)?advancedbenefitdesigns\.com)?\/wp-content\/uploads\/2025\/02\/office-buildings-with-modern-architecture(?:-\d+x\d+)?\.jpg/g,
     LOCATION_IMAGE_URL,
   )
 
@@ -100,7 +100,7 @@ const applyCommunityImageSwap = (content: string) => {
 
   next = replaceAll(
     next,
-    /https:\/\/advancedbenefitdesigns\.com\/wp-content\/uploads\/2025\/02\/KMS-Pro-Shot_page-0001(?:-e\d+)?(?:-\d+x\d+)?\.jpg/g,
+    /(?:https:\/\/(?:www\.)?advancedbenefitdesigns\.com)?\/wp-content\/uploads\/2025\/02\/KMS-Pro-Shot_page-0001(?:-e\d+)?(?:-\d+x\d+)?\.jpg/g,
     PROFILE_IMAGE_URL,
   )
 

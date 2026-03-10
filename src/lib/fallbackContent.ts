@@ -2,10 +2,10 @@ import { AREAS_SERVED, CONTACT_DETAILS, HOME_SERVICE_CARDS, SITE_ORIGIN } from '
 import type { ContentIndex, ContentType, WpRecord } from '../types'
 
 const PROFILE_IMAGE_URL =
-  'https://advancedbenefitdesigns.com/wp-content/uploads/2025/02/KMS-Head-Shot-21_page-0001-e1772705284359.jpg'
+  '/wp-content/uploads/2025/02/KMS-Head-Shot-21_page-0001-e1772705284359.jpg'
 
 const LOCATION_IMAGE_URL =
-  'https://advancedbenefitdesigns.com/wp-content/uploads/2026/03/abd-company-location.jpeg'
+  '/wp-content/uploads/2026/03/abd-company-location.jpeg'
 
 const PUBLISHED_AT = '2026-02-24T09:00:00.000Z'
 const UPDATED_AT = '2026-03-10T09:00:00.000Z'

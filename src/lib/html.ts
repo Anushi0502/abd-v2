@@ -8,6 +8,13 @@ interface TransformOptions {
 
 const stripTrailingSlash = (value: string) => value.replace(/\/+$/, '')
 const BLOCKED_INTERNAL_LINK_PREFIX = /^(mailto:|tel:|#|javascript:|data:)/i
+const KNOWN_UPLOADS_HOSTS = new Set([
+  'advancedbenefitdesigns.com',
+  'www.advancedbenefitdesigns.com',
+  'mail.advancedbenefitdesigns.com',
+])
+const ABSOLUTE_UPLOADS_URL_PATTERN =
+  /https?:\/\/(?:mail\.)?(?:www\.)?advancedbenefitdesigns\.com(\/wp-content\/uploads\/[^)"'\s]+)/gi
 const DATE_FORMATTER = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'short',
@@ -59,6 +66,52 @@ export const plainTextFromHtml = (html: string): string => {
   const parser = new DOMParser()
   const parsed = parser.parseFromString(html, 'text/html')
   return (parsed.body.textContent ?? '').replace(/\s+/g, ' ').trim()
+}
+
+const toLocalUploadsPath = (input: string): string => {
+  const value = input.trim()
+  if (!value) {
+    return input
+  }
+
+  try {
+    const url = new URL(value, SITE_ORIGIN)
+    if (!KNOWN_UPLOADS_HOSTS.has(url.hostname.toLowerCase())) {
+      return input
+    }
+
+    if (!url.pathname.startsWith('/wp-content/uploads/')) {
+      return input
+    }
+
+    return `${url.pathname}${url.search}${url.hash}`
+  } catch {
+    return input.replace(ABSOLUTE_UPLOADS_URL_PATTERN, (_match, path) => path)
+  }
+}
+
+const rewriteSrcSetToLocalUploads = (srcSet: string): string => {
+  return srcSet
+    .split(',')
+    .map((entry) => {
+      const trimmed = entry.trim()
+      if (!trimmed) {
+        return trimmed
+      }
+
+      const [url, ...descriptors] = trimmed.split(/\s+/)
+      const localizedUrl = toLocalUploadsPath(url)
+      return [localizedUrl, ...descriptors].join(' ').trim()
+    })
+    .join(', ')
+}
+
+const rewriteStyleToLocalUploads = (style: string): string => {
+  if (!style) {
+    return style
+  }
+
+  return style.replace(ABSOLUTE_UPLOADS_URL_PATTERN, (_match, path) => path)
 }
 
 export const extractHighlights = (html: string, max = 5): string[] => {
@@ -113,22 +166,60 @@ const rewriteLinksAndMedia = (sourceHtml: string, options: Required<TransformOpt
     Array.from(node.attributes)
       .filter((attribute) => attribute.name.startsWith('on'))
       .forEach((attribute) => node.removeAttribute(attribute.name))
+
+    const styleValue = node.getAttribute('style')
+    if (styleValue) {
+      const localizedStyle = rewriteStyleToLocalUploads(styleValue)
+      if (localizedStyle !== styleValue) {
+        node.setAttribute('style', localizedStyle)
+      }
+    }
   })
 
   parsed.querySelectorAll<HTMLImageElement>('img').forEach((image) => {
     const breezeSrc = image.getAttribute('data-breeze')
     if (breezeSrc) {
-      image.setAttribute('src', breezeSrc)
+      image.setAttribute('src', toLocalUploadsPath(breezeSrc))
     }
 
     const breezeSrcSet = image.getAttribute('data-brsrcset')
     if (breezeSrcSet) {
-      image.setAttribute('srcset', breezeSrcSet)
+      image.setAttribute('srcset', rewriteSrcSetToLocalUploads(breezeSrcSet))
     }
 
     const breezeSizes = image.getAttribute('data-brsizes')
     if (breezeSizes) {
       image.setAttribute('sizes', breezeSizes)
+    }
+
+    const src = image.getAttribute('src')
+    if (src) {
+      image.setAttribute('src', toLocalUploadsPath(src))
+    }
+
+    const srcSet = image.getAttribute('srcset')
+    if (srcSet) {
+      image.setAttribute('srcset', rewriteSrcSetToLocalUploads(srcSet))
+    }
+
+    const dataSrc = image.getAttribute('data-src')
+    if (dataSrc) {
+      image.setAttribute('data-src', toLocalUploadsPath(dataSrc))
+    }
+
+    const dataLazySrc = image.getAttribute('data-lazy-src')
+    if (dataLazySrc) {
+      image.setAttribute('data-lazy-src', toLocalUploadsPath(dataLazySrc))
+    }
+
+    const dataSrcSet = image.getAttribute('data-srcset')
+    if (dataSrcSet) {
+      image.setAttribute('data-srcset', rewriteSrcSetToLocalUploads(dataSrcSet))
+    }
+
+    const dataLazySrcSet = image.getAttribute('data-lazy-srcset')
+    if (dataLazySrcSet) {
+      image.setAttribute('data-lazy-srcset', rewriteSrcSetToLocalUploads(dataLazySrcSet))
     }
 
     if (!image.getAttribute('loading')) {
@@ -139,6 +230,14 @@ const rewriteLinksAndMedia = (sourceHtml: string, options: Required<TransformOpt
   parsed.querySelectorAll<HTMLAnchorElement>('a[href]').forEach((anchor) => {
     const href = anchor.getAttribute('href')
     if (!href) {
+      return
+    }
+
+    const localizedHref = toLocalUploadsPath(href)
+    if (localizedHref !== href) {
+      anchor.setAttribute('href', localizedHref)
+      anchor.removeAttribute('target')
+      anchor.removeAttribute('rel')
       return
     }
 

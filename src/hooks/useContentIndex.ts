@@ -1,42 +1,50 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
+import { getRestoredContentIndex } from '../data/restoredContent'
 import { getFallbackContentIndex } from '../lib/fallbackContent'
-import type { ContentState } from '../types'
+import type { ContentState, WpRecord } from '../types'
 
 interface UseContentIndexState extends ContentState {
   refresh: () => void
   lastUpdated: number | null
 }
 
-const initialState: ContentState = {
-  pages: [],
-  posts: [],
-  loading: true,
-  error: null,
+const mergeBySlug = (primary: WpRecord[], secondary: WpRecord[]): WpRecord[] => {
+  const map = new Map<string, WpRecord>()
+
+  for (const item of secondary) {
+    map.set(item.slug.toLowerCase(), item)
+  }
+
+  for (const item of primary) {
+    map.set(item.slug.toLowerCase(), item)
+  }
+
+  return Array.from(map.values())
+}
+
+const initialState = (): ContentState => {
+  const restored = getRestoredContentIndex()
+  const fallback = getFallbackContentIndex()
+  const content = {
+    pages: mergeBySlug(restored.pages, fallback.pages),
+    posts: mergeBySlug(restored.posts, fallback.posts),
+  }
+
+  return {
+    ...content,
+    loading: false,
+    error: null,
+  }
 }
 
 export const useContentIndex = (): UseContentIndexState => {
-  const [state, setState] = useState<ContentState>(initialState)
-  const [refreshVersion, setRefreshVersion] = useState(0)
-  const [lastUpdated, setLastUpdated] = useState<number | null>(null)
+  const [state, setState] = useState<ContentState>(() => initialState())
+  const [lastUpdated, setLastUpdated] = useState<number | null>(() => Date.now())
 
   const refresh = useCallback(() => {
-    setState((current) => ({
-      ...current,
-      loading: true,
-      error: null,
-    }))
-    setRefreshVersion((current) => current + 1)
-  }, [])
-
-  useEffect(() => {
-    const content = getFallbackContentIndex()
-    setState({
-      ...content,
-      loading: false,
-      error: null,
-    })
+    setState(initialState())
     setLastUpdated(Date.now())
-  }, [refreshVersion])
+  }, [])
 
   return {
     ...state,
