@@ -365,7 +365,6 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
       <section className="home2026-hero">
         <div className="container home2026-hero-grid animate-in">
           <div className="home2026-hero-copy">
-            <p className="eyebrow">Advanced Benefit Designs</p>
             <h1>Financial Planning With 2026 Clarity and Confidence</h1>
             <p>{summary}</p>
 
@@ -380,7 +379,6 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
           </div>
 
           <aside className="home2026-hero-panel" aria-label="Planning highlights">
-            <p className="home2026-hero-panel-label">Planning Signal</p>
             <h3>Built for Action, Not Guesswork</h3>
             <ul>
               <li>Tax-aware strategy aligned to your timeline and risk comfort.</li>
@@ -426,7 +424,6 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
       <section className="home2026-strategy">
         <div className="container home2026-strategy-grid animate-in">
           <div className="home2026-strategy-copy">
-            <p className="eyebrow">Strategic Financial Planning</p>
             <h2>
               Strategic Financial Planning,
               <br />
