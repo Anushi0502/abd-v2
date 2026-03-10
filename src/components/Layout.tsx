@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useState } from 'react'
+import { type ReactNode, useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { AREAS_SERVED, CONTACT_DETAILS, LOGO_URL, PRIMARY_NAV, SERVICE_NAV, SOCIAL_LINKS } from '../constants'
 
@@ -9,11 +9,41 @@ interface LayoutProps {
 const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
-  const closeServicesMenu = () => setServicesOpen(false)
-  const closeAllMenus = () => {
-    setMobileOpen(false)
+  const servicesCloseTimeoutRef = useRef<number | null>(null)
+
+  const clearServicesCloseTimeout = () => {
+    if (servicesCloseTimeoutRef.current !== null) {
+      window.clearTimeout(servicesCloseTimeoutRef.current)
+      servicesCloseTimeoutRef.current = null
+    }
+  }
+
+  const openServicesMenu = () => {
+    clearServicesCloseTimeout()
+    setServicesOpen(true)
+  }
+
+  const closeServicesMenu = () => {
+    clearServicesCloseTimeout()
     setServicesOpen(false)
   }
+
+  const scheduleServicesClose = () => {
+    clearServicesCloseTimeout()
+    servicesCloseTimeoutRef.current = window.setTimeout(() => {
+      setServicesOpen(false)
+      servicesCloseTimeoutRef.current = null
+    }, 160)
+  }
+
+  const closeAllMenus = () => {
+    setMobileOpen(false)
+    closeServicesMenu()
+  }
+
+  useEffect(() => {
+    return () => clearServicesCloseTimeout()
+  }, [])
 
   useEffect(() => {
     if (!mobileOpen && !servicesOpen) {
@@ -78,15 +108,25 @@ const SiteHeader = () => {
 
             <div
               className={`site-dropdown ${servicesOpen ? 'is-open' : ''}`}
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={closeServicesMenu}
+              onMouseEnter={openServicesMenu}
+              onMouseLeave={scheduleServicesClose}
+              onFocusCapture={openServicesMenu}
+              onBlurCapture={(event) => {
+                const nextTarget = event.relatedTarget
+                if (!(nextTarget instanceof Node) || !event.currentTarget.contains(nextTarget)) {
+                  closeServicesMenu()
+                }
+              }}
             >
               <button
                 type="button"
                 className="dropdown-trigger"
                 aria-haspopup="true"
                 aria-expanded={servicesOpen}
-                onClick={() => setServicesOpen((current) => !current)}
+                onClick={() => {
+                  clearServicesCloseTimeout()
+                  setServicesOpen((current) => !current)
+                }}
               >
                 Services <span aria-hidden="true">v</span>
               </button>

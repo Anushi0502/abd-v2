@@ -99,18 +99,18 @@ main {
 }
 
 .btn-primary {
-  background: linear-gradient(120deg, var(--brand-accent), #ffd667);
-  color: #1f2b3d;
-  box-shadow: 0 16px 28px rgba(252, 185, 0, 0.3);
+  background: linear-gradient(120deg, #1d4ed8, #207601);
+  color: #ffffff;
+  box-shadow: 0 16px 28px rgba(16, 59, 174, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  background: linear-gradient(120deg, var(--brand-accent-deep), var(--brand-accent));
+  background: linear-gradient(120deg, #1639a9, #185e01);
 }
 
 .btn-outline {
-  border-color: rgba(252, 185, 0, 0.65);
+  border-color: rgba(32, 118, 1, 0.55);
   color: var(--brand-navy);
   background: rgba(255, 255, 255, 0.95);
 }
@@ -240,11 +240,13 @@ main {
 
 .site-dropdown {
   position: relative;
+  padding-bottom: 0.65rem;
+  margin-bottom: -0.65rem;
 }
 
 .dropdown-panel {
   position: absolute;
-  top: calc(100% + 0.7rem);
+  top: calc(100% + 0.2rem);
   left: -0.9rem;
   min-width: 250px;
   background: #fff;
@@ -1041,9 +1043,9 @@ main {
 }
 
 .ret-calc-profile-btn.active {
-  background: linear-gradient(125deg, #fcb900, #ffd667);
-  border-color: rgba(252, 185, 0, 0.9);
-  color: #1d2a3d;
+  background: linear-gradient(125deg, #1d4ed8, #207601);
+  border-color: rgba(32, 118, 1, 0.86);
+  color: #ffffff;
 }
 
 .ret-calc-assumption-grid {
@@ -1994,7 +1996,7 @@ body {
 }
 
 .btn-primary:hover {
-  box-shadow: 0 18px 38px rgba(252, 185, 0, 0.36);
+  box-shadow: 0 18px 38px rgba(16, 59, 174, 0.34);
 }
 
 .btn-outline:hover {
@@ -2287,6 +2289,18 @@ body {
   background: rgba(11, 27, 111, 1);
 }
 
+.home2026-path-card.is-new .home2026-path-btn {
+  background: linear-gradient(120deg, #1f2db8 0%, #207601 100%);
+  border-color: rgba(255, 255, 255, 0.48);
+  box-shadow: 0 14px 24px rgba(32, 118, 1, 0.32);
+}
+
+.home2026-path-card.is-new .home2026-path-btn:hover,
+.home2026-path-card.is-new .home2026-path-btn:focus-visible {
+  background: linear-gradient(120deg, #1a2494 0%, #1b6602 100%);
+  box-shadow: 0 16px 28px rgba(32, 118, 1, 0.38);
+}
+
 .home2026-strategy {
   position: relative;
 }
@@ -2339,14 +2353,14 @@ body {
 }
 
 .home2026-strategy .btn-primary {
-  background: linear-gradient(135deg, #2342c6, #1f7f03);
+  background: linear-gradient(135deg, #2342c6, #207601);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.24);
   box-shadow: 0 14px 28px rgba(10, 24, 91, 0.35);
 }
 
 .home2026-strategy .btn-primary:hover {
-  background: linear-gradient(135deg, #1f39ad, #1a6c02);
+  background: linear-gradient(135deg, #1f39ad, #185e01);
 }
 
 .home2026-strategy .btn-outline {
@@ -2854,7 +2868,7 @@ body {
 .home2026-testimonial-card strong {
   margin-top: 0.75rem;
   display: block;
-  color: #ffd667;
+  color: #207601;
   font-size: 0.8rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
