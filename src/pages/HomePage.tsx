@@ -402,7 +402,6 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
       <section className="home2026-paths">
         <div className="container home2026-path-grid animate-in">
           <article className="home2026-path-card is-new">
-            <p className="home2026-path-eyebrow">01 · New Client</p>
             <h2>I&apos;m New Here</h2>
             <p>Start with a clear consultation and a practical action roadmap.</p>
             <Link to="/contact-us" className="home2026-path-btn">
@@ -411,7 +410,6 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
           </article>
 
           <article className="home2026-path-card is-existing">
-            <p className="home2026-path-eyebrow">02 · Existing Plan</p>
             <h2>I Already Have a Plan</h2>
             <p>Get a focused second opinion to improve outcomes and reduce blind spots.</p>
             <Link to="/contact-us" className="home2026-path-btn">
