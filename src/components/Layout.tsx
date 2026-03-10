@@ -14,23 +14,14 @@ interface LayoutProps {
   children: ReactNode
 }
 
-const SOCIAL_ICON_SLUGS: Record<string, string> = {
-  Facebook: 'facebook',
-  LinkedIn: 'linkedin',
-  YouTube: 'youtube',
-  Instagram: 'instagram',
+const SOCIAL_ICON_LABELS: Record<string, string> = {
+  Facebook: 'f',
+  LinkedIn: 'in',
+  YouTube: 'yt',
+  Instagram: 'ig',
 }
 
 const SERVICE_ICON_BY_ROUTE = new Map(HOME_SERVICE_CARDS.map((entry) => [entry.to, entry.icon]))
-
-const getSocialIconUrl = (label: string) => {
-  const slug = SOCIAL_ICON_SLUGS[label]
-  if (!slug) {
-    return null
-  }
-
-  return `https://cdn.simpleicons.org/${slug}/ffffff`
-}
 
 const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -258,7 +249,7 @@ const SiteFooter = () => {
           </p>
           <div className="footer-social-links" aria-label="Social channels">
             {SOCIAL_LINKS.map((social) => {
-              const iconUrl = getSocialIconUrl(social.label)
+              const iconLabel = SOCIAL_ICON_LABELS[social.label] ?? social.label.slice(0, 2)
 
               return (
                 <a
@@ -269,11 +260,7 @@ const SiteFooter = () => {
                   className="footer-social-link"
                 >
                   <span className="footer-social-icon" aria-hidden="true">
-                    {iconUrl ? (
-                      <img src={iconUrl} alt="" className="footer-social-icon-svg" />
-                    ) : (
-                      <span className="footer-social-fallback">#</span>
-                    )}
+                    <span className="footer-social-fallback">{iconLabel}</span>
                   </span>
                   <span>{social.label}</span>
                 </a>

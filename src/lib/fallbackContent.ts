@@ -82,6 +82,20 @@ const fallbackHome = makeRecord({
   `,
 })
 
+const fallbackRetirementCalculator = makeRecord({
+  id: 107,
+  slug: 'retirement-calculator',
+  title: 'Retirement Calculator',
+  excerpt: 'Model retirement outcomes with confidence using practical assumptions and scenarios.',
+  content: `
+    <h2>Retirement Calculator</h2>
+    <p>
+      Use the calculator to compare savings rate, timeline, spending, and income assumptions.
+      Then review your results with strategy guidance tailored to your goals.
+    </p>
+  `,
+})
+
 const fallbackAboutContent = `
   <h2>Simplifying Employee Benefits for a Better Tomorrow.</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;align-items:start;">
@@ -337,6 +351,7 @@ const fallbackBlogPosts: WpRecord[] = [
 
 const fallbackPages: WpRecord[] = [
   fallbackHome,
+  fallbackRetirementCalculator,
   fallbackAbout,
   fallbackAboutAlias,
   fallbackCommunity,

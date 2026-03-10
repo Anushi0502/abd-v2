@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { fetchContentIndex } from '../lib/wpApi'
+import { getFallbackContentIndex } from '../lib/fallbackContent'
 import type { ContentState } from '../types'
 
 interface UseContentIndexState extends ContentState {
@@ -29,41 +29,13 @@ export const useContentIndex = (): UseContentIndexState => {
   }, [])
 
   useEffect(() => {
-    let isCancelled = false
-
-    const load = async () => {
-      try {
-        const content = await fetchContentIndex({
-          forceRefresh: refreshVersion > 0,
-        })
-
-        if (!isCancelled) {
-          setState({
-            ...content,
-            loading: false,
-            error: null,
-          })
-          setLastUpdated(Date.now())
-        }
-      } catch (error) {
-        if (!isCancelled) {
-          const message = error instanceof Error ? error.message : 'Unable to load website content.'
-
-          setState((current) => ({
-            pages: current.pages,
-            posts: current.posts,
-            loading: false,
-            error: message,
-          }))
-        }
-      }
-    }
-
-    void load()
-
-    return () => {
-      isCancelled = true
-    }
+    const content = getFallbackContentIndex()
+    setState({
+      ...content,
+      loading: false,
+      error: null,
+    })
+    setLastUpdated(Date.now())
   }, [refreshVersion])
 
   return {
