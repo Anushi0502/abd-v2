@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { SERVICE_NAV } from '../constants'
 import { plainTextFromHtml } from '../lib/html'
 import type { WpRecord } from '../types'
 

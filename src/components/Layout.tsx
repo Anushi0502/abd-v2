@@ -6,6 +6,24 @@ interface LayoutProps {
   children: ReactNode
 }
 
+const SOCIAL_ICON_LABELS: Record<string, string> = {
+  Facebook: 'f',
+  LinkedIn: 'in',
+  YouTube: 'YT',
+  Instagram: 'IG',
+}
+
+const SERVICE_ICON_LABELS: Record<string, string> = {
+  'Life Insurance': 'LI',
+  'Tax-Free Retirement': 'TR',
+  'Business Preservation': 'BP',
+  'Estate Planning': 'EP',
+  'Long Term Care Planning': 'LC',
+  'Life Time Income': 'IN',
+  'Mortgage Protection': 'MP',
+  'Medicare Insurance': 'MC',
+}
+
 const SiteHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [servicesOpen, setServicesOpen] = useState(false)
@@ -232,8 +250,17 @@ const SiteFooter = () => {
           </p>
           <div className="footer-social-links" aria-label="Social channels">
             {SOCIAL_LINKS.map((social) => (
-              <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">
-                {social.label}
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social-link"
+              >
+                <span className="footer-social-icon" aria-hidden="true">
+                  {SOCIAL_ICON_LABELS[social.label] ?? '->'}
+                </span>
+                <span>{social.label}</span>
               </a>
             ))}
           </div>
@@ -244,7 +271,12 @@ const SiteFooter = () => {
           <ul>
             {SERVICE_NAV.map((item) => (
               <li key={item.to}>
-                <NavLink to={item.to}>{item.label}</NavLink>
+                <NavLink to={item.to} className="footer-service-link">
+                  <span className="footer-service-icon" aria-hidden="true">
+                    {SERVICE_ICON_LABELS[item.label] ?? '::'}
+                  </span>
+                  <span>{item.label}</span>
+                </NavLink>
               </li>
             ))}
           </ul>
