@@ -9,10 +9,10 @@
   --ink-muted: #4b5e6c;
   --brand-navy: #0b1b6f;
   --brand-navy-deep: #08134c;
-  --brand-accent: #fcb900;
-  --brand-accent-deep: #dc9f00;
+  --brand-accent: #1d4ed8;
+  --brand-accent-deep: #1639a9;
   --line: rgba(11, 27, 111, 0.12);
-  --ring: rgba(252, 185, 0, 0.42);
+  --ring: rgba(29, 78, 216, 0.42);
   --shadow: 0 22px 55px rgba(7, 19, 73, 0.12);
   --radius-lg: 24px;
   --radius-md: 14px;
@@ -34,7 +34,7 @@ body {
   color: var(--ink);
   font-family: var(--font-main);
   background:
-    radial-gradient(circle at 20% 0%, rgba(252, 185, 0, 0.16), transparent 45%),
+    radial-gradient(circle at 20% 0%, rgba(29, 78, 216, 0.16), transparent 45%),
     radial-gradient(circle at 90% 25%, rgba(11, 27, 111, 0.09), transparent 42%),
     var(--bg);
   line-height: 1.55;
@@ -157,7 +157,7 @@ main {
 .site-contact-meta a {
   color: #fff;
   text-decoration: underline;
-  text-decoration-color: rgba(252, 185, 0, 0.7);
+  text-decoration-color: rgba(29, 78, 216, 0.7);
 }
 
 .site-social-row {
@@ -273,7 +273,7 @@ main {
 
 .dropdown-panel a:hover,
 .dropdown-panel .active {
-  background: linear-gradient(120deg, rgba(252, 185, 0, 0.22), rgba(11, 27, 111, 0.09));
+  background: linear-gradient(120deg, rgba(29, 78, 216, 0.24), rgba(32, 118, 1, 0.2));
 }
 
 .site-dropdown:hover .dropdown-panel,
@@ -554,9 +554,9 @@ main {
 
 .content-sync-banner {
   margin-top: 0.9rem;
-  border: 1px solid rgba(252, 185, 0, 0.45);
+  border: 1px solid rgba(29, 78, 216, 0.45);
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, rgba(252, 185, 0, 0.16), rgba(255, 255, 255, 0.95));
+  background: linear-gradient(135deg, rgba(29, 78, 216, 0.16), rgba(255, 255, 255, 0.95));
   padding: 0.85rem 1rem;
   display: grid;
   gap: 0.6rem;
@@ -613,7 +613,7 @@ main {
   border: 1px solid rgba(11, 27, 111, 0.16);
   background:
     linear-gradient(145deg, rgba(10, 24, 91, 0.95), rgba(17, 45, 138, 0.88)),
-    radial-gradient(circle at 78% 22%, rgba(252, 185, 0, 0.2), transparent 52%);
+    radial-gradient(circle at 78% 22%, rgba(29, 78, 216, 0.2), transparent 52%);
   color: #fff;
   box-shadow: var(--shadow);
 }
@@ -648,8 +648,8 @@ main {
 }
 
 .hero-meta a {
-  background: rgba(252, 185, 0, 0.94);
-  border-color: rgba(252, 185, 0, 0.95);
+  background: rgba(29, 78, 216, 0.94);
+  border-color: rgba(29, 78, 216, 0.95);
   color: #1d2a3d;
   font-weight: 700;
 }
@@ -831,7 +831,7 @@ main {
 .enhanced-main a {
   color: var(--brand-navy);
   text-decoration: underline;
-  text-decoration-color: rgba(252, 185, 0, 0.85);
+  text-decoration-color: rgba(29, 78, 216, 0.85);
   text-underline-offset: 0.2rem;
 }
 
@@ -890,7 +890,7 @@ main {
 }
 
 .route-list-compact a:hover {
-  border-color: rgba(252, 185, 0, 0.9);
+  border-color: rgba(29, 78, 216, 0.9);
 }
 
 .card-grid {
@@ -1000,7 +1000,7 @@ main {
 .contact-panel-form input:focus,
 .contact-panel-form textarea:focus {
   border-color: var(--brand-accent);
-  outline: 3px solid rgba(252, 185, 0, 0.24);
+  outline: 3px solid rgba(29, 78, 216, 0.24);
 }
 
 .checkbox-label {
@@ -1038,7 +1038,7 @@ main {
   border: 1px solid rgba(11, 27, 111, 0.16);
   background:
     linear-gradient(138deg, rgba(10, 24, 91, 0.96), rgba(17, 45, 138, 0.9)),
-    radial-gradient(circle at 78% 24%, rgba(252, 185, 0, 0.2), transparent 54%);
+    radial-gradient(circle at 78% 24%, rgba(29, 78, 216, 0.2), transparent 54%);
   color: #fff;
   padding: clamp(1.2rem, 2.2vw, 2rem);
   box-shadow: var(--shadow);
@@ -1191,7 +1191,7 @@ main {
 
 .ret-calc-field-grid input[type='number']:focus {
   border-color: var(--brand-accent);
-  outline: 3px solid rgba(252, 185, 0, 0.24);
+  outline: 3px solid rgba(29, 78, 216, 0.24);
 }
 
 .ret-calc-checkbox {
@@ -1488,7 +1488,7 @@ main {
 
 .footer-shape {
   height: 26px;
-  background: linear-gradient(135deg, rgba(252, 185, 0, 0.45), transparent 40%);
+  background: linear-gradient(135deg, rgba(29, 78, 216, 0.45), transparent 40%);
 }
 
 .footer-grid {
@@ -1531,7 +1531,7 @@ main {
 .footer-grid li a,
 .footer-grid p a {
   color: #fff;
-  border-bottom: 1px dashed rgba(252, 185, 0, 0.7);
+  border-bottom: 1px dashed rgba(29, 78, 216, 0.7);
 }
 
 .footer-social-links {
@@ -1546,7 +1546,7 @@ main {
   align-items: center;
   gap: 0.4rem;
   border-radius: 999px;
-  border: 1px solid rgba(252, 185, 0, 0.62);
+  border: 1px solid rgba(29, 78, 216, 0.62);
   padding: 0.35rem 0.64rem;
   font-size: 0.78rem;
 }
@@ -1613,7 +1613,7 @@ main {
 }
 
 .site-legal a {
-  color: #ffd667;
+  color: #8fb6ff;
 }
 
 .btn {
@@ -1641,7 +1641,7 @@ main {
 .rail-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 16px 34px rgba(11, 27, 111, 0.16);
-  border-color: rgba(252, 185, 0, 0.35);
+  border-color: rgba(29, 78, 216, 0.35);
 }
 
 .enhanced-main {
@@ -1665,7 +1665,7 @@ main {
   inset: 0;
   background:
     radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.12), transparent 45%),
-    radial-gradient(circle at 78% 86%, rgba(252, 185, 0, 0.16), transparent 42%);
+    radial-gradient(circle at 78% 86%, rgba(29, 78, 216, 0.16), transparent 42%);
   pointer-events: none;
 }
 
@@ -1676,7 +1676,7 @@ main {
 
 .footer-grid section:hover {
   transform: translateY(-2px);
-  border-color: rgba(252, 185, 0, 0.4);
+  border-color: rgba(29, 78, 216, 0.4);
 }
 
 .animate-in {
@@ -2205,7 +2205,7 @@ body {
   overflow: hidden;
   padding-top: clamp(1.6rem, 3vw, 2.6rem);
   background:
-    radial-gradient(circle at 10% 14%, rgba(252, 185, 0, 0.23), transparent 42%),
+    radial-gradient(circle at 10% 14%, rgba(29, 78, 216, 0.23), transparent 42%),
     radial-gradient(circle at 92% 18%, rgba(11, 27, 111, 0.15), transparent 50%),
     linear-gradient(135deg, #f7f9fd 0%, #eef2fb 58%, #e6edf9 100%);
 }
@@ -2644,7 +2644,7 @@ body {
   content: '';
   position: absolute;
   inset: -20%;
-  background: linear-gradient(115deg, transparent 36%, rgba(252, 185, 0, 0.2) 50%, transparent 64%);
+  background: linear-gradient(115deg, transparent 36%, rgba(29, 78, 216, 0.2) 50%, transparent 64%);
   transform: translateX(-130%);
   transition: transform 0.62s ease;
   pointer-events: none;
@@ -2665,7 +2665,7 @@ body {
 .home2026-misconception-grid article:focus-within,
 .home2026-faq-item:focus-within {
   transform: translateY(-5px);
-  border-color: rgba(252, 185, 0, 0.46);
+  border-color: rgba(29, 78, 216, 0.46);
   box-shadow: 0 22px 38px rgba(11, 27, 111, 0.15);
 }
 
@@ -2997,7 +2997,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.26);
   background:
     linear-gradient(150deg, rgba(10, 24, 91, 0.92), rgba(20, 53, 140, 0.9)),
-    radial-gradient(circle at 82% 6%, rgba(252, 185, 0, 0.18), transparent 40%);
+    radial-gradient(circle at 82% 6%, rgba(29, 78, 216, 0.18), transparent 40%);
   color: #fff;
   padding: 1rem;
   box-shadow: 0 16px 30px rgba(11, 27, 111, 0.22);
@@ -3257,7 +3257,7 @@ body {
 
 .route-list-compact a:hover {
   transform: translateX(3px);
-  background: linear-gradient(130deg, rgba(252, 185, 0, 0.16), rgba(11, 27, 111, 0.06));
+  background: linear-gradient(130deg, rgba(29, 78, 216, 0.18), rgba(32, 118, 1, 0.14));
 }
 
 .contact-panel-form input,
