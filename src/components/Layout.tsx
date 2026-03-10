@@ -1,27 +1,35 @@
 import { type ReactNode, useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { AREAS_SERVED, CONTACT_DETAILS, LOGO_URL, PRIMARY_NAV, SERVICE_NAV, SOCIAL_LINKS } from '../constants'
+import {
+  AREAS_SERVED,
+  CONTACT_DETAILS,
+  HOME_SERVICE_CARDS,
+  LOGO_URL,
+  PRIMARY_NAV,
+  SERVICE_NAV,
+  SOCIAL_LINKS,
+} from '../constants'
 
 interface LayoutProps {
   children: ReactNode
 }
 
-const SOCIAL_ICON_LABELS: Record<string, string> = {
-  Facebook: 'f',
-  LinkedIn: 'in',
-  YouTube: 'YT',
-  Instagram: 'IG',
+const SOCIAL_ICON_SLUGS: Record<string, string> = {
+  Facebook: 'facebook',
+  LinkedIn: 'linkedin',
+  YouTube: 'youtube',
+  Instagram: 'instagram',
 }
 
-const SERVICE_ICON_LABELS: Record<string, string> = {
-  'Life Insurance': 'LI',
-  'Tax-Free Retirement': 'TR',
-  'Business Preservation': 'BP',
-  'Estate Planning': 'EP',
-  'Long Term Care Planning': 'LC',
-  'Life Time Income': 'IN',
-  'Mortgage Protection': 'MP',
-  'Medicare Insurance': 'MC',
+const SERVICE_ICON_BY_ROUTE = new Map(HOME_SERVICE_CARDS.map((entry) => [entry.to, entry.icon]))
+
+const getSocialIconUrl = (label: string) => {
+  const slug = SOCIAL_ICON_SLUGS[label]
+  if (!slug) {
+    return null
+  }
+
+  return `https://cdn.simpleicons.org/${slug}/ffffff`
 }
 
 const SiteHeader = () => {
@@ -249,20 +257,28 @@ const SiteFooter = () => {
             confidence, and long-term protection.
           </p>
           <div className="footer-social-links" aria-label="Social channels">
-            {SOCIAL_LINKS.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-social-link"
-              >
-                <span className="footer-social-icon" aria-hidden="true">
-                  {SOCIAL_ICON_LABELS[social.label] ?? '->'}
-                </span>
-                <span>{social.label}</span>
-              </a>
-            ))}
+            {SOCIAL_LINKS.map((social) => {
+              const iconUrl = getSocialIconUrl(social.label)
+
+              return (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="footer-social-link"
+                >
+                  <span className="footer-social-icon" aria-hidden="true">
+                    {iconUrl ? (
+                      <img src={iconUrl} alt="" className="footer-social-icon-svg" />
+                    ) : (
+                      <span className="footer-social-fallback">#</span>
+                    )}
+                  </span>
+                  <span>{social.label}</span>
+                </a>
+              )
+            })}
           </div>
         </section>
 
@@ -273,7 +289,7 @@ const SiteFooter = () => {
               <li key={item.to}>
                 <NavLink to={item.to} className="footer-service-link">
                   <span className="footer-service-icon" aria-hidden="true">
-                    {SERVICE_ICON_LABELS[item.label] ?? '::'}
+                    {SERVICE_ICON_BY_ROUTE.get(item.to) ?? '::'}
                   </span>
                   <span>{item.label}</span>
                 </NavLink>
@@ -302,14 +318,6 @@ const SiteFooter = () => {
           <p>
             <a href={`mailto:${CONTACT_DETAILS.email}`}>{CONTACT_DETAILS.email}</a>
           </p>
-          <a
-            className="btn btn-outline"
-            href="https://community.advancedbenefitsdesigns.com/login"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Client Login
-          </a>
         </section>
       </div>
 

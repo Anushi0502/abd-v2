@@ -34,6 +34,57 @@ export const PRIMARY_NAV = [
   { label: 'Blogs', to: '/blogs' },
 ] as const
 
+export const HOME_SERVICE_CARDS = [
+  {
+    icon: '\u{1F6E1}\uFE0F',
+    title: 'Life Insurance',
+    description: "Protection designed to secure your family's financial future and legacy.",
+    to: '/life-insurance',
+  },
+  {
+    icon: '\u{21D7}',
+    title: 'Tax-Free Retirement',
+    description: 'Strategies designed to reduce future tax exposure and create flexible income.',
+    to: '/retirement-planning-strategies',
+  },
+  {
+    icon: '\u{1F4BC}',
+    title: 'Business Preservation',
+    description: 'Succession planning, key-person protection, and continuity strategies.',
+    to: '/business-preservation',
+  },
+  {
+    icon: '\u{1F4DC}',
+    title: 'Estate Planning',
+    description: 'Ensuring your assets are distributed according to your wishes with clarity.',
+    to: '/estate-planning',
+  },
+  {
+    icon: '\u{23F3}',
+    title: 'Long Term Care Planning',
+    description: 'Planning that protects independence and financial stability if care is needed.',
+    to: '/long-term-care-planning',
+  },
+  {
+    icon: '\u{267E}',
+    title: 'Life Time Income',
+    description: 'Income strategies designed to last through retirement and beyond.',
+    to: '/lifetime-income',
+  },
+  {
+    icon: '\u{1F3E0}',
+    title: 'Mortgage Protection',
+    description: 'Ensures your home and family are protected against unexpected events.',
+    to: '/mortgage-protection-insurance',
+  },
+  {
+    icon: '\u{1F3E5}',
+    title: 'Medicare Insurance',
+    description: 'Guidance to help you navigate Medicare choices with confidence and clarity.',
+    to: '/medicare-insurance-plans',
+  },
+] as const
+
 export const SERVICE_NAV = [
   { label: 'Life Insurance', to: '/life-insurance' },
   { label: 'Tax-Free Retirement', to: '/retirement-planning-strategies' },

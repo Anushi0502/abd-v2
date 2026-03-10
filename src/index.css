@@ -1561,6 +1561,18 @@ main {
   line-height: 1;
 }
 
+.footer-social-icon-svg {
+  width: 0.74rem;
+  height: 0.74rem;
+  display: block;
+}
+
+.footer-social-fallback {
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
 .footer-service-link {
   display: inline-flex;
   align-items: center;
@@ -1577,7 +1589,7 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.34);
   background: rgba(255, 255, 255, 0.14);
   color: #dff0ff;
-  font-size: 0.58rem;
+  font-size: 0.76rem;
   font-weight: 800;
   line-height: 1;
   flex: 0 0 auto;

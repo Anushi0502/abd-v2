@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { HOME_SERVICE_CARDS } from '../constants'
 import { plainTextFromHtml } from '../lib/html'
 import type { WpRecord } from '../types'
 
@@ -42,57 +43,6 @@ const PROCESS_STEPS = [
   'Design: Build a personalized strategy across protection, retirement, and tax efficiency.',
   'Implementation: Put recommendations in place with transparent guidance.',
   'Review: Recalibrate annually as life, markets, and priorities change.',
-] as const
-
-const SERVICE_CARDS = [
-  {
-    icon: '🛡️',
-    title: 'Life Insurance',
-    description: 'Protection designed to secure your family’s financial future and legacy.',
-    to: '/life-insurance',
-  },
-  {
-    icon: '↗',
-    title: 'Tax-Free Retirement',
-    description: 'Strategies designed to reduce future tax exposure and create flexible income.',
-    to: '/retirement-planning-strategies',
-  },
-  {
-    icon: '💼',
-    title: 'Business Preservation',
-    description: 'Succession planning, key-person protection, and continuity strategies.',
-    to: '/business-preservation',
-  },
-  {
-    icon: '📜',
-    title: 'Estate Planning',
-    description: 'Ensuring your assets are distributed according to your wishes with clarity.',
-    to: '/estate-planning',
-  },
-  {
-    icon: '⏳',
-    title: 'Long Term Care Planning',
-    description: 'Planning that protects independence and financial stability if care is needed.',
-    to: '/long-term-care-planning',
-  },
-  {
-    icon: '♾',
-    title: 'Life Time Income',
-    description: 'Income strategies designed to last through retirement and beyond.',
-    to: '/lifetime-income',
-  },
-  {
-    icon: '🏠',
-    title: 'Mortgage Protection',
-    description: 'Ensures your home and family are protected against unexpected events.',
-    to: '/mortgage-protection-insurance',
-  },
-  {
-    icon: '🏥',
-    title: 'Medicare Insurance',
-    description: 'Guidance to help you navigate Medicare choices with confidence and clarity.',
-    to: '/medicare-insurance-plans',
-  },
 ] as const
 
 const ASSOCIATED_LOGOS = [
@@ -527,7 +477,7 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
         <div className="container abd-container">
           <h2 className="abd-services-title">Our Services</h2>
           <div className="home2026-service-grid abd-grid abd-services-grid">
-            {SERVICE_CARDS.map((service) => (
+            {HOME_SERVICE_CARDS.map((service) => (
               <Link key={service.to} to={service.to} className="home2026-service-item abd-card abd-service-card">
                 <div className="abd-cta-icon" aria-hidden="true">
                   {service.icon}
