@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import ContactFormPanel from '../components/ContactFormPanel'
 import RichContent from '../components/RichContent'
@@ -10,6 +11,7 @@ export interface DynamicPageProps {
   loading: boolean
   error: string | null
   suggestedPages: WpRecord[]
+  posts: WpRecord[]
 }
 
 const estimateReadingMinutes = (text: string) => {
@@ -23,7 +25,66 @@ const estimateReadingMinutes = (text: string) => {
 
 const EXCLUDED_CONTINUE_EXPLORING_SLUGS = new Set(['about-us-copy'])
 
-const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPageProps) => {
+interface TocItem {
+  id: string
+  text: string
+  level: 2 | 3
+}
+
+const slugify = (input: string) => {
+  return input
+    .toLowerCase()
+    .trim()
+    .replace(/&/g, ' and ')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+}
+
+const buildContentWithOutline = (html: string): { html: string; toc: TocItem[] } => {
+  try {
+    const parser = new DOMParser()
+    const parsed = parser.parseFromString(html, 'text/html')
+    const headingNodes = Array.from(parsed.querySelectorAll('h2, h3'))
+    const usedIds = new Set<string>()
+    const toc: TocItem[] = []
+
+    headingNodes.forEach((node) => {
+      const text = (node.textContent ?? '').replace(/\s+/g, ' ').trim()
+      if (text.length < 4) {
+        return
+      }
+
+      const nodeLevel = node.tagName === 'H3' ? 3 : 2
+      const baseId = node.id?.trim() || slugify(text)
+      if (!baseId) {
+        return
+      }
+
+      let finalId = baseId
+      let suffix = 2
+      while (usedIds.has(finalId)) {
+        finalId = `${baseId}-${suffix}`
+        suffix += 1
+      }
+
+      node.id = finalId
+      usedIds.add(finalId)
+      toc.push({ id: finalId, text, level: nodeLevel })
+    })
+
+    return { html: parsed.body.innerHTML, toc: toc.slice(0, 12) }
+  } catch {
+    return { html, toc: [] }
+  }
+}
+
+const extractFirstImageSrc = (html: string) => {
+  const match = html.match(/<img[^>]+src=["']([^"']+)["']/i)
+  return match?.[1] ?? null
+}
+
+const DynamicPage = ({ entity, slug, loading, error, suggestedPages, posts }: DynamicPageProps) => {
   if (loading) {
     return (
       <section className="page-state container">
@@ -59,6 +120,7 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
     )
   }
 
+  const { html: enhancedContent, toc } = useMemo(() => buildContentWithOutline(entity.content), [entity.content])
   const excerptText = plainTextFromHtml(entity.excerpt)
   const contentText = plainTextFromHtml(entity.content)
   const highlights = extractHighlights(entity.content, 7)
@@ -77,6 +139,29 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
   const railHighlights = highlights.length > 0 ? highlights.slice(0, 6) : heroHighlights
   const readingMinutes = estimateReadingMinutes(contentText)
   const pageSlugClass = `page-${entity.slug.replace(/[^a-z0-9-]+/gi, '-').toLowerCase()}`
+  const latestBlogs = useMemo(() => {
+    return [...posts]
+      .filter((post) => post.slug !== entity.slug)
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 8)
+      .map((post) => {
+        const excerpt = plainTextFromHtml(post.excerpt).trim()
+        const fallbackText = excerpt.length > 0 ? excerpt : plainTextFromHtml(post.content).trim()
+        const snippet =
+          fallbackText.length > 118
+            ? `${fallbackText.slice(0, 115).replace(/\s+\S*$/, '')}...`
+            : fallbackText
+
+        return {
+          id: post.id,
+          slug: post.slug,
+          title: post.title,
+          date: post.date,
+          snippet,
+          image: extractFirstImageSrc(post.content),
+        }
+      })
+  }, [entity.slug, posts])
 
   return (
     <article className={`enhanced-page page2026 page2026-dynamic ${pageSlugClass}`}>
@@ -109,10 +194,25 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
 
       <section className="container enhanced-layout">
         <div className="enhanced-main animate-in">
-          <RichContent html={entity.content} preserveStyles preserveIframes />
+          <RichContent html={enhancedContent} preserveStyles preserveIframes />
         </div>
 
         <aside className="enhanced-rail animate-in">
+          <div className="rail-card rail-outline">
+            <h3>On This Page</h3>
+            {toc.length === 0 ? (
+              <p>Jump links appear automatically when section headings are available.</p>
+            ) : (
+              <nav className="rail-toc" aria-label="On this page">
+                {toc.map((item) => (
+                  <a key={item.id} href={`#${item.id}`} className={`rail-toc-link level-${item.level}`}>
+                    {item.text}
+                  </a>
+                ))}
+              </nav>
+            )}
+          </div>
+
           <div className="rail-card">
             <h3>Key Takeaways</h3>
             {highlights.length === 0 && <p>No direct bullet highlights found, showing smart defaults.</p>}
@@ -142,6 +242,36 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
               <Link to="/estate-planning">Estate Planning</Link>
               <Link to="/medicare-insurance-plans">Medicare Insurance</Link>
             </div>
+          </div>
+
+          <div className="rail-card">
+            <h3>Latest Insights</h3>
+            {latestBlogs.length === 0 ? (
+              <div className="route-list-compact">
+                <Link to="/blogs">Explore blog insights</Link>
+              </div>
+            ) : (
+              <div className="rail-blog-list">
+                {latestBlogs.map((post) => {
+                  return (
+                    <Link key={post.id} to={`/${post.slug}`} className="rail-blog-item">
+                      {post.image ? (
+                        <img src={post.image} alt="" loading="lazy" decoding="async" />
+                      ) : (
+                        <span className="rail-blog-fallback" aria-hidden="true">
+                          ABD
+                        </span>
+                      )}
+                      <span className="rail-blog-copy">
+                        <strong>{post.title}</strong>
+                        <small>{formatDate(post.date)}</small>
+                        {post.snippet ? <span>{post.snippet}</span> : null}
+                      </span>
+                    </Link>
+                  )
+                })}
+              </div>
+            )}
           </div>
 
           <div className="rail-card">

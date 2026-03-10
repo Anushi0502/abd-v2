@@ -12,6 +12,7 @@ import type { WpRecord } from './types'
 
 interface DynamicRouteResolverProps {
   pages: WpRecord[]
+  posts: WpRecord[]
   pageLookup: Map<string, WpRecord>
   postLookup: Map<string, WpRecord>
   loading: boolean
@@ -20,6 +21,7 @@ interface DynamicRouteResolverProps {
 
 const DynamicRouteResolver = ({
   pages,
+  posts,
   pageLookup,
   postLookup,
   loading,
@@ -52,6 +54,7 @@ const DynamicRouteResolver = ({
       loading={loading}
       error={error}
       suggestedPages={pages}
+      posts={posts}
     />
   )
 }
@@ -139,6 +142,7 @@ const AppShell = () => {
                 loading={loading}
                 error={routeError}
                 suggestedPages={pages}
+                posts={posts}
               />
             }
           />
@@ -148,6 +152,7 @@ const AppShell = () => {
           element={
             <DynamicRouteResolver
               pages={pages}
+              posts={posts}
               pageLookup={pageLookup}
               postLookup={postLookup}
               loading={loading}

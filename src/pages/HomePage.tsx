@@ -351,6 +351,23 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
       <section className="home2026-paths">
         <div className="container home2026-path-grid animate-in">
           <article className="home2026-path-card is-new">
+            <div className="home2026-path-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                role="presentation"
+                focusable="false"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 19h14M12 4v15M12 4l5 5M12 4L7 9"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
             <h2>I&apos;m New Here</h2>
             <p>Start with a clear consultation and a practical action roadmap.</p>
             <Link to="/contact-us" className="home2026-path-btn">
@@ -359,6 +376,23 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
           </article>
 
           <article className="home2026-path-card is-existing">
+            <div className="home2026-path-icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                role="presentation"
+                focusable="false"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 11h8M9 15h5M7.5 5h9A1.5 1.5 0 0 1 18 6.5v11a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 17.5v-11A1.5 1.5 0 0 1 7.5 5ZM10 3h4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.9"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
             <h2>I Already Have a Plan</h2>
             <p>Get a focused second opinion to improve outcomes and reduce blind spots.</p>
             <Link to="/contact-us" className="home2026-path-btn">
@@ -408,10 +442,10 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
 
       <section className="home2026-trust">
         <div className="container">
-          <p className="home2026-trust-copy">
+          <h4 className="home2026-trust-copy">
             We don&apos;t believe in one-size-fits-all solutions. Every recommendation is tailored to
             your goals, timeline, and comfort with risk, never quotas or pressure.
-          </p>
+          </h4>
           <div className="home2026-trust-grid" ref={trustGridRef}>
             {TRUST_STATS.map((item) => (
               <article key={item.label}>
@@ -573,4 +607,3 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
 }
 
 export default HomePage
-
