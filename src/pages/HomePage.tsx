@@ -616,11 +616,6 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
             <Link to="/contact-us" className="btn btn-primary">
               Schedule a Conversation
             </Link>
-            {SERVICE_NAV.length > 0 && (
-              <Link to={SERVICE_NAV[0].to} className="btn btn-outline">
-                Review Service Paths
-              </Link>
-            )}
           </div>
         </div>
       </section>

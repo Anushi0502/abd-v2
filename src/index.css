@@ -3898,3 +3898,65 @@ h4 {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Section spacing + FAQ state styling updates */
+.home2026 > section {
+  margin-top: clamp(1.8rem, 3.8vw, 3.2rem);
+}
+
+.home2026 > section:first-child {
+  margin-top: 0;
+}
+
+.home2026-faq-grid {
+  margin-top: 1rem;
+  gap: 0.9rem;
+}
+
+.home2026-faq-item {
+  border: 1px solid rgba(173, 206, 255, 0.36);
+  background: linear-gradient(145deg, rgba(12, 46, 138, 0.95), rgba(34, 80, 189, 0.92));
+  box-shadow: 0 16px 30px rgba(11, 37, 116, 0.2);
+}
+
+.home2026-faq-item summary {
+  color: #f5f8ff;
+}
+
+.home2026-faq-item p {
+  color: rgba(236, 243, 255, 0.94);
+}
+
+.home2026-faq-item summary::after {
+  color: #b6d4ff;
+}
+
+.home2026-faq-item:hover,
+.home2026-faq-item:focus-within,
+.home2026-faq-item[open] {
+  background: linear-gradient(160deg, #ffffff, #f5f9ff);
+  border-color: rgba(12, 38, 120, 0.18);
+  box-shadow: 0 20px 34px rgba(11, 32, 94, 0.14);
+}
+
+.home2026-faq-item:hover summary,
+.home2026-faq-item:focus-within summary,
+.home2026-faq-item[open] summary {
+  color: #0f1f49;
+}
+
+.home2026-faq-item:hover p,
+.home2026-faq-item:focus-within p,
+.home2026-faq-item[open] p {
+  color: #39506a;
+}
+
+.home2026-faq-item:hover summary::after,
+.home2026-faq-item:focus-within summary::after,
+.home2026-faq-item[open] summary::after {
+  color: #1f7f03;
+}
+
+.home2026-faq-item[open] summary::after {
+  content: '-';
+}
