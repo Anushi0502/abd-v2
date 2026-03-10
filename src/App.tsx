@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useMemo } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Layout from './components/Layout'
 import { resolveAliasSlug } from './lib/html'
@@ -58,11 +59,44 @@ const DynamicRouteResolver = ({
 }
 
 const AppShell = () => {
-  const { pages, posts, loading, error } = useContentIndex()
+  const { pages, posts, loading, error, refresh, lastUpdated } = useContentIndex()
+  const pageLookup = useMemo(() => {
+    return new Map(pages.map((entry) => [entry.slug.toLowerCase(), entry]))
+  }, [pages])
+  const postLookup = useMemo(() => {
+    return new Map(posts.map((entry) => [entry.slug.toLowerCase(), entry]))
+  }, [posts])
 
-  const homePage = pages.find((entry) => entry.slug === 'home') ?? null
-  const retirementCalculatorPage =
-    pages.find((entry) => entry.slug === 'retirement-calculator') ?? null
+  const homePage = pageLookup.get('home') ?? null
+  const retirementCalculatorPage = pageLookup.get('retirement-calculator') ?? null
+  const hasContent = pages.length > 0 || posts.length > 0
+  const routeError = hasContent ? null : error
+  const lastUpdatedLabel = useMemo(() => {
+    if (!lastUpdated) {
+      return null
+    }
+
+    return new Intl.DateTimeFormat('en-US', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(lastUpdated)
+  }, [lastUpdated])
+
+  if (error && !loading && !hasContent) {
+    return (
+      <Layout>
+        <section className="page-state container">
+          <h1>Unable to load live website content</h1>
+          <p>{error}</p>
+          <p>
+            <button type="button" className="btn btn-primary" onClick={refresh}>
+              Retry Connection
+            </button>
+          </p>
+        </section>
+      </Layout>
+    )
+  }
 
   return (
     <Layout>
