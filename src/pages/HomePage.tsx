@@ -361,7 +361,7 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
   }
 
   return (
-    <article className="home2026">
+    <article className="home2026 page2026 page2026-home">
       <section className="home2026-hero">
         <div className="container home2026-hero-grid animate-in">
           <div className="home2026-hero-copy">
@@ -379,6 +379,25 @@ const HomePage = ({ homePage, loading, error }: HomePageProps) => {
             </div>
           </div>
 
+          <aside className="home2026-hero-panel" aria-label="Planning highlights">
+            <p className="home2026-hero-panel-label">Planning Signal</p>
+            <h3>Built for Action, Not Guesswork</h3>
+            <ul>
+              <li>Tax-aware strategy aligned to your timeline and risk comfort.</li>
+              <li>Transparent recommendations with practical implementation steps.</li>
+              <li>Ongoing reviews as life goals and market conditions evolve.</li>
+            </ul>
+            <div className="home2026-hero-panel-metrics">
+              <article>
+                <strong>25+</strong>
+                <span>Years experience</span>
+              </article>
+              <article>
+                <strong>1,000+</strong>
+                <span>Plans designed</span>
+              </article>
+            </div>
+          </aside>
         </div>
       </section>
 

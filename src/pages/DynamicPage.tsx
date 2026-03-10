@@ -1,7 +1,7 @@
-﻿import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import ContactFormPanel from '../components/ContactFormPanel'
 import RichContent from '../components/RichContent'
-import { formatDate, extractHighlights, plainTextFromHtml } from '../lib/html'
+import { extractHighlights, formatDate, plainTextFromHtml } from '../lib/html'
 import type { WpRecord } from '../types'
 
 export interface DynamicPageProps {
@@ -60,9 +60,7 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
   const excerptText = plainTextFromHtml(entity.excerpt)
   const contentText = plainTextFromHtml(entity.content)
   const highlights = extractHighlights(entity.content, 7)
-  const summaryText = excerptText || contentText.slice(0, 260)
-  const readingMinutes = estimateReadingMinutes(contentText)
-  const summarySource = plainTextFromHtml(entity.excerpt) || plainTextFromHtml(entity.content).slice(0, 360)
+  const summarySource = excerptText || contentText.slice(0, 360)
   const summaryText =
     summarySource.length > 290 ? `${summarySource.slice(0, 287).replace(/\s+\S*$/, '')}...` : summarySource
   const heroHighlights =
@@ -75,7 +73,7 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
           'Clear next steps without pressure',
         ]
   const railHighlights = highlights.length > 0 ? highlights.slice(0, 6) : heroHighlights
-  const readingMinutes = estimateReadingMinutes(plainTextFromHtml(entity.content))
+  const readingMinutes = estimateReadingMinutes(contentText)
   const pageSlugClass = `page-${entity.slug.replace(/[^a-z0-9-]+/gi, '-').toLowerCase()}`
 
   return (
@@ -115,15 +113,7 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
         <aside className="enhanced-rail animate-in">
           <div className="rail-card">
             <h3>Key Takeaways</h3>
-            {highlights.length > 0 ? (
-              <ul>
-                {highlights.slice(0, 6).map((highlight) => (
-                  <li key={highlight}>{highlight}</li>
-                ))}
-              </ul>
-            ) : (
-              <p>No summary highlights available for this page yet.</p>
-            )}
+            {highlights.length === 0 && <p>No direct bullet highlights found, showing smart defaults.</p>}
             <ul>
               {railHighlights.map((highlight) => (
                 <li key={highlight}>{highlight}</li>
@@ -134,8 +124,8 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages }: DynamicPa
           <div className="rail-card rail-cta rail-cta-sticky">
             <h3>Need clear guidance for your next financial move?</h3>
             <p>
-              Book a focused review and receive recommendations tailored to your timeline, income,
-              and risk comfort.
+              Book a focused review and receive recommendations tailored to your timeline, income, and
+              risk comfort.
             </p>
             <Link to="/contact-us" className="btn btn-primary">
               Request Strategy Review

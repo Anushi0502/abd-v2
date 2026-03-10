@@ -1,9 +1,8 @@
 import { useMemo } from 'react'
-import { useMemo } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Layout from './components/Layout'
-import { resolveAliasSlug } from './lib/html'
 import { useContentIndex } from './hooks/useContentIndex'
+import { resolveAliasSlug } from './lib/html'
 import BlogsPage from './pages/blogs'
 import DynamicPage from './pages/dynamic'
 import { DYNAMIC_ROUTE_COMPONENTS } from './pages/dynamic/routeRegistry'
@@ -27,7 +26,6 @@ const DynamicRouteResolver = ({
   error,
 }: DynamicRouteResolverProps) => {
   const location = useLocation()
-
   const requestedSlug = location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase()
   const canonicalSlug = resolveAliasSlug(requestedSlug)
 
@@ -66,6 +64,7 @@ const AppShell = () => {
   const postLookup = useMemo(() => {
     return new Map(posts.map((entry) => [entry.slug.toLowerCase(), entry]))
   }, [posts])
+  const dedicatedDynamicRoutes = useMemo(() => Object.entries(DYNAMIC_ROUTE_COMPONENTS), [])
 
   const homePage = pageLookup.get('home') ?? null
   const retirementCalculatorPage = pageLookup.get('retirement-calculator') ?? null
@@ -136,9 +135,9 @@ const AppShell = () => {
             element={
               <RouteComponent
                 slug={slug}
-                entity={pageBySlug.get(slug) ?? postBySlug.get(slug) ?? null}
+                entity={pageLookup.get(slug) ?? postLookup.get(slug) ?? null}
                 loading={loading}
-                error={error}
+                error={routeError}
                 suggestedPages={pages}
               />
             }
