@@ -6,7 +6,6 @@ import FinancialCompanyRoute from './routes/FinancialCompanyRoute'
 
 export const DYNAMIC_ROUTE_COMPONENTS: Record<string, ComponentType<DynamicPageProps>> = {
   'financial-company': FinancialCompanyRoute,
-  'about-us': FinancialCompanyRoute,
   'contact-us': ContactUsRoute,
   community: CommunityRoute,
 }

@@ -1,4 +1,4 @@
-import { type FormEvent, useMemo, useState } from 'react'
+import { type FormEvent, useState } from 'react'
 import { SITE_ORIGIN } from '../constants'
 
 declare global {
@@ -66,8 +66,6 @@ const ContactFormPanel = () => {
   const [marketingConsent, setMarketingConsent] = useState(false)
   const [serviceConsent, setServiceConsent] = useState(false)
 
-  const fallbackContactUrl = useMemo(() => `${SITE_ORIGIN}/contact-us/`, [])
-
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
 
@@ -121,7 +119,7 @@ const ContactFormPanel = () => {
         setMarketingConsent(false)
         setServiceConsent(false)
       } else {
-        const apiMessage = result.data?.message ?? 'Submission failed. Please use the secure fallback form.'
+        const apiMessage = result.data?.message ?? 'Submission failed. Please try again in a moment.'
         const firstFieldError = result.data?.errors
           ? Object.values(result.data.errors).find((item) => item && item.trim().length > 0)
           : null
@@ -131,81 +129,109 @@ const ContactFormPanel = () => {
       }
     } catch {
       setStatus('error')
-      setMessage('Unable to submit right now. Please use the secure fallback form.')
+      setMessage('Unable to submit right now. Please try again in a moment.')
     } finally {
       setSubmitting(false)
     }
   }
 
   return (
-    <section className="contact-panel">
-      <div className="contact-panel-copy">
-        <p className="eyebrow">Direct Backend Connection</p>
-        <h2>Send Your Request to the Live ABD Backend</h2>
+    <section className="contact-panel contact-panel-2026">
+      <article className="contact-panel-intro">
+        <p className="eyebrow">Client Intake</p>
+        <h2>Build Your Financial Roadmap With a Focused Consultation</h2>
         <p>
-          This form submits into the active Advanced Benefit Designs WordPress workflow. If reCAPTCHA
-          blocks local testing, use the secure fallback form.
+          Share your goals and concerns. We will review your details and respond with practical next
+          steps tailored to your timeline, cash flow, and risk comfort.
         </p>
-        <a href={fallbackContactUrl} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
-          Open Secure Fallback Form
-        </a>
-      </div>
+
+        <div className="contact-panel-signal-row" aria-label="Service highlights">
+          <span>Response within 1 business day</span>
+          <span>Private and secure intake workflow</span>
+        </div>
+
+        <div className="contact-panel-meta-grid" aria-label="Contact details">
+          <article>
+            <span>Call</span>
+            <a href="tel:215-262-5456">215-262-5456</a>
+          </article>
+          <article>
+            <span>Email</span>
+            <a href="mailto:info@advancedbenefitsdesigns.com">info@advancedbenefitsdesigns.com</a>
+          </article>
+          <article>
+            <span>Location</span>
+            <strong>Doylestown, PA</strong>
+          </article>
+        </div>
+      </article>
 
       <form className="contact-panel-form" onSubmit={handleSubmit}>
-        <label>
-          Name
-          <input value={name} onChange={(event) => setName(event.target.value)} required />
-        </label>
+        <div className="contact-panel-form-head">
+          <h3>Get In Touch</h3>
+          <p>All fields are required so we can respond with the right strategy context.</p>
+        </div>
 
-        <label>
-          Email
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
-        </label>
+        <div className="contact-panel-field-grid">
+          <label>
+            Name
+            <input value={name} onChange={(event) => setName(event.target.value)} required />
+          </label>
 
-        <label>
-          Phone
-          <input
-            type="tel"
-            value={phone}
-            onChange={(event) => setPhone(event.target.value)}
-            pattern="[0-9()#&+*=.\\- ]+"
-            required
-          />
-        </label>
+          <label>
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+            />
+          </label>
 
-        <label>
-          Message
-          <textarea rows={4} value={notes} onChange={(event) => setNotes(event.target.value)} />
-        </label>
+          <label className="is-full">
+            Phone
+            <input
+              type="tel"
+              value={phone}
+              onChange={(event) => setPhone(event.target.value)}
+              pattern="[0-9()#&+*=.\\- ]+"
+              required
+            />
+          </label>
 
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            checked={marketingConsent}
-            onChange={(event) => setMarketingConsent(event.target.checked)}
-            required
-          />
-          I consent to receive marketing text messages.
-        </label>
+          <label className="is-full">
+            Message
+            <textarea rows={4} value={notes} onChange={(event) => setNotes(event.target.value)} required />
+          </label>
+        </div>
 
-        <label className="checkbox-label">
-          <input
-            type="checkbox"
-            checked={serviceConsent}
-            onChange={(event) => setServiceConsent(event.target.checked)}
-            required
-          />
-          I consent to receive non-marketing updates.
-        </label>
+        <div className="contact-panel-consent-stack">
+          <label className="checkbox-label contact-panel-checkbox">
+            <input
+              type="checkbox"
+              checked={marketingConsent}
+              onChange={(event) => setMarketingConsent(event.target.checked)}
+              required
+            />
+            I consent to receive marketing text messages.
+          </label>
 
-        <button type="submit" className="btn btn-primary" disabled={submitting}>
-          {submitting ? 'Sending...' : 'Unlock Tax Savings - Get in Touch'}
-        </button>
+          <label className="checkbox-label contact-panel-checkbox">
+            <input
+              type="checkbox"
+              checked={serviceConsent}
+              onChange={(event) => setServiceConsent(event.target.checked)}
+              required
+            />
+            I consent to receive non-marketing updates.
+          </label>
+        </div>
+
+        <div className="contact-panel-action-row">
+          <button type="submit" className="btn btn-primary" disabled={submitting}>
+            {submitting ? 'Sending...' : 'Unlock Tax Savings - Get in Touch'}
+          </button>
+        </div>
 
         {status !== 'idle' && (
           <p className={`form-status ${status === 'success' ? 'form-status-success' : 'form-status-error'}`}>

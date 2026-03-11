@@ -5,7 +5,7 @@ export const LOGO_URL =
   'https://advancedbenefitdesigns.com/wp-content/uploads/2025/02/ABD-LOGO-1-e1739423897271.png'
 
 export const COMMUNITY_BADGE_URL =
-  '/wp-content/uploads/2025/02/Untitled-design-1-e1758880559940.png'
+  'https://advancedbenefitdesigns.com/wp-content/uploads/2025/02/Untitled-design-1-e1758880559940.png'
 
 export const SOCIAL_LINKS = [
   {
@@ -110,6 +110,7 @@ export const LEGACY_ALIASES: Record<string, string> = {
   '': 'home',
   '/': 'home',
   home: 'home',
+  'about-us': 'financial-company',
   mortgage_protection: 'mortgage-protection-insurance',
   'mortgage-protection': 'mortgage-protection-insurance',
   medicare: 'medicare-insurance-plans',
