@@ -298,13 +298,60 @@ const SiteFooter = () => {
 
         <section>
           <h3>Get Connected</h3>
-          <p>{CONTACT_DETAILS.address}</p>
-          <p>
-            <a href={`tel:${CONTACT_DETAILS.phone}`}>{CONTACT_DETAILS.phone}</a>
-          </p>
-          <p>
-            <a href={`mailto:${CONTACT_DETAILS.email}`}>{CONTACT_DETAILS.email}</a>
-          </p>
+          <div className="footer-contact-list">
+            <p className="footer-contact-item">
+              <span className="footer-contact-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" role="presentation">
+                  <path
+                    d="M12 21s6-5.33 6-11a6 6 0 1 0-12 0c0 5.67 6 11 6 11Z"
+                    stroke="currentColor"
+                    strokeWidth="1.9"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <circle cx="12" cy="10" r="2.2" fill="currentColor" />
+                </svg>
+              </span>
+              <span>{CONTACT_DETAILS.address}</span>
+            </p>
+            <p className="footer-contact-item">
+              <span className="footer-contact-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" role="presentation">
+                  <path
+                    d="M6.4 4h2.95a1.2 1.2 0 0 1 1.18 1l.45 2.7a1.2 1.2 0 0 1-.66 1.28l-1.6.8a12.1 12.1 0 0 0 5.5 5.5l.8-1.6a1.2 1.2 0 0 1 1.28-.66l2.7.45a1.2 1.2 0 0 1 1 1.18v2.95A1.4 1.4 0 0 1 18.6 20C10.54 20 4 13.46 4 5.4A1.4 1.4 0 0 1 6.4 4Z"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+              <a href={`tel:${CONTACT_DETAILS.phone}`}>{CONTACT_DETAILS.phone}</a>
+            </p>
+            <p className="footer-contact-item">
+              <span className="footer-contact-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" role="presentation">
+                  <rect
+                    x="3.2"
+                    y="5.8"
+                    width="17.6"
+                    height="12.4"
+                    rx="2.2"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                  />
+                  <path
+                    d="m4.8 7.2 7.2 5.4 7.2-5.4"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+              <a href={`mailto:${CONTACT_DETAILS.email}`}>{CONTACT_DETAILS.email}</a>
+            </p>
+          </div>
         </section>
       </div>
 

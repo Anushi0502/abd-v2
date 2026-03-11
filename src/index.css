@@ -1600,6 +1600,40 @@ main {
   flex: 0 0 auto;
 }
 
+.footer-contact-list {
+  margin-top: 0.55rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.footer-contact-item {
+  margin: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.56rem;
+  line-height: 1.42;
+}
+
+.footer-contact-icon {
+  width: 1.28rem;
+  height: 1.28rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.14);
+  color: #e9f3ff;
+  flex: 0 0 auto;
+  margin-top: 0.04rem;
+}
+
+.footer-contact-icon svg {
+  width: 0.76rem;
+  height: 0.76rem;
+  display: block;
+}
+
 .site-legal {
   border-top: 1px solid rgba(255, 255, 255, 0.16);
   text-align: center;
