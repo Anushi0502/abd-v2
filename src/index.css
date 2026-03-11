@@ -1666,6 +1666,15 @@ main {
   word-break: break-word;
 }
 
+.footer-contact-item .footer-contact-email {
+  display: block;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+  font-size: clamp(0.82rem, 2.35vw, 1rem);
+  letter-spacing: -0.01em;
+}
+
 .site-legal {
   border-top: 1px solid rgba(255, 255, 255, 0.16);
   text-align: center;

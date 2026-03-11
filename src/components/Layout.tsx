@@ -328,7 +328,7 @@ const SiteFooter = () => {
               </span>
               <a href={`tel:${CONTACT_DETAILS.phone}`}>{CONTACT_DETAILS.phone}</a>
             </p>
-            <p className="footer-contact-item">
+            <p className="footer-contact-item footer-contact-item--email">
               <span className="footer-contact-icon footer-contact-icon--email" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" role="presentation">
                   <rect
@@ -349,7 +349,9 @@ const SiteFooter = () => {
                   />
                 </svg>
               </span>
-              <a href={`mailto:${CONTACT_DETAILS.email}`}>{CONTACT_DETAILS.email}</a>
+              <a className="footer-contact-email" href={`mailto:${CONTACT_DETAILS.email}`}>
+                {CONTACT_DETAILS.email}
+              </a>
             </p>
           </div>
         </section>
