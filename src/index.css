@@ -1618,34 +1618,40 @@ main {
 }
 
 .footer-contact-icon {
-  width: 1.28rem;
-  height: 1.28rem;
+  width: 1.44rem;
+  height: 1.44rem;
   border-radius: 999px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.26);
-  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff !important;
   flex: 0 0 auto;
-  margin-top: 0.1rem;
+  margin-top: 0.08rem;
   box-shadow: 0 8px 16px rgba(8, 24, 84, 0.22);
 }
 
 .footer-contact-icon--location {
-  background: linear-gradient(145deg, #f97744, #e11d48);
+  background: linear-gradient(145deg, #fb923c, #ef4444) !important;
+  border-color: rgba(252, 165, 165, 0.85);
+  box-shadow: 0 8px 16px rgba(190, 24, 93, 0.35);
 }
 
 .footer-contact-icon--phone {
-  background: linear-gradient(145deg, #14b8a6, #2563eb);
+  background: linear-gradient(145deg, #22d3ee, #2563eb) !important;
+  border-color: rgba(125, 211, 252, 0.85);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.35);
 }
 
 .footer-contact-icon--email {
-  background: linear-gradient(145deg, #16a34a, #0ea5e9);
+  background: linear-gradient(145deg, #22c55e, #06b6d4) !important;
+  border-color: rgba(134, 239, 172, 0.82);
+  box-shadow: 0 8px 16px rgba(8, 145, 178, 0.35);
 }
 
 .footer-contact-icon svg {
-  width: 0.76rem;
-  height: 0.76rem;
+  width: 0.84rem;
+  height: 0.84rem;
   display: block;
 }
 
