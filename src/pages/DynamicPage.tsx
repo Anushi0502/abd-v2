@@ -23,6 +23,7 @@ const estimateReadingMinutes = (text: string) => {
 }
 
 const EXCLUDED_CONTINUE_EXPLORING_SLUGS = new Set(['about-us-copy'])
+const MOVED_CONTINUE_EXPLORING_SLUGS = new Set(['financial-company', 'long-term-care-planning'])
 
 interface TocItem {
   id: string
@@ -220,7 +221,7 @@ const DynamicPage = ({ entity, slug, loading, error, suggestedPages, posts }: Dy
 
     return uniquePages
   })()
-  const shouldMoveContinueExploring = entityCanonicalSlug === 'financial-company'
+  const shouldMoveContinueExploring = MOVED_CONTINUE_EXPLORING_SLUGS.has(entityCanonicalSlug)
   const latestBlogs = [...posts]
     .filter((post) => post.slug !== entity.slug)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())

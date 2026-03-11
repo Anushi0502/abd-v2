@@ -4202,12 +4202,14 @@ h4 {
   }
 
   .page-financial-company .enhanced-layout,
+  .page-long-term-care-planning .enhanced-layout,
   .page-about-us .enhanced-layout,
   .page-about-us-copy .enhanced-layout {
     grid-template-rows: auto auto;
   }
 
   .page-financial-company .enhanced-layout > .enhanced-rail,
+  .page-long-term-care-planning .enhanced-layout > .enhanced-rail,
   .page-about-us .enhanced-layout > .enhanced-rail,
   .page-about-us-copy .enhanced-layout > .enhanced-rail {
     grid-column: 2;
@@ -4216,6 +4218,7 @@ h4 {
   }
 
   .page-financial-company .enhanced-layout > .rail-card,
+  .page-long-term-care-planning .enhanced-layout > .rail-card,
   .page-about-us .enhanced-layout > .rail-card,
   .page-about-us-copy .enhanced-layout > .rail-card {
     grid-column: 1;
