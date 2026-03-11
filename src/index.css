@@ -1604,13 +1604,16 @@ main {
   margin-top: 0.55rem;
   display: grid;
   gap: 0.55rem;
+  width: 100%;
 }
 
 .footer-contact-item {
   margin: 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 0.56rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.28rem minmax(0, 1fr);
+  align-items: start;
+  column-gap: 0.56rem;
   line-height: 1.42;
 }
 
@@ -1621,17 +1624,40 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.34);
-  background: rgba(255, 255, 255, 0.14);
-  color: #e9f3ff;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  color: #ffffff;
   flex: 0 0 auto;
-  margin-top: 0.04rem;
+  margin-top: 0.1rem;
+  box-shadow: 0 8px 16px rgba(8, 24, 84, 0.22);
+}
+
+.footer-contact-icon--location {
+  background: linear-gradient(145deg, #f97744, #e11d48);
+}
+
+.footer-contact-icon--phone {
+  background: linear-gradient(145deg, #14b8a6, #2563eb);
+}
+
+.footer-contact-icon--email {
+  background: linear-gradient(145deg, #16a34a, #0ea5e9);
 }
 
 .footer-contact-icon svg {
   width: 0.76rem;
   height: 0.76rem;
   display: block;
+}
+
+.footer-contact-item > :last-child {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.footer-contact-item a,
+.footer-contact-item > span:last-child {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .site-legal {

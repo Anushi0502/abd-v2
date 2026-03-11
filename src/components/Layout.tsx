@@ -300,7 +300,7 @@ const SiteFooter = () => {
           <h3>Get Connected</h3>
           <div className="footer-contact-list">
             <p className="footer-contact-item">
-              <span className="footer-contact-icon" aria-hidden="true">
+              <span className="footer-contact-icon footer-contact-icon--location" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" role="presentation">
                   <path
                     d="M12 21s6-5.33 6-11a6 6 0 1 0-12 0c0 5.67 6 11 6 11Z"
@@ -315,7 +315,7 @@ const SiteFooter = () => {
               <span>{CONTACT_DETAILS.address}</span>
             </p>
             <p className="footer-contact-item">
-              <span className="footer-contact-icon" aria-hidden="true">
+              <span className="footer-contact-icon footer-contact-icon--phone" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" role="presentation">
                   <path
                     d="M6.4 4h2.95a1.2 1.2 0 0 1 1.18 1l.45 2.7a1.2 1.2 0 0 1-.66 1.28l-1.6.8a12.1 12.1 0 0 0 5.5 5.5l.8-1.6a1.2 1.2 0 0 1 1.28-.66l2.7.45a1.2 1.2 0 0 1 1 1.18v2.95A1.4 1.4 0 0 1 18.6 20C10.54 20 4 13.46 4 5.4A1.4 1.4 0 0 1 6.4 4Z"
@@ -329,7 +329,7 @@ const SiteFooter = () => {
               <a href={`tel:${CONTACT_DETAILS.phone}`}>{CONTACT_DETAILS.phone}</a>
             </p>
             <p className="footer-contact-item">
-              <span className="footer-contact-icon" aria-hidden="true">
+              <span className="footer-contact-icon footer-contact-icon--email" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" role="presentation">
                   <rect
                     x="3.2"
