@@ -2,7 +2,7 @@ export const SITE_ORIGIN = 'https://advancedbenefitdesigns.com'
 export const WP_API_ORIGIN = `${SITE_ORIGIN}/wp-json/wp/v2`
 
 export const LOGO_URL =
-  'https://www.canva.com/design/DAHDoXf29UY/mSLW4N3Dea-st1zEJl6xGA/edit?utm_content=DAHDoXf29UY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton'
+  'https://advancedbenefitdesigns.com/wp-content/uploads/2025/02/ABD-LOGO-1-e1739423897271.png'
 
 export const COMMUNITY_BADGE_URL =
   'https://advancedbenefitdesigns.com/wp-content/uploads/2025/02/Untitled-design-1-e1758880559940.png'
