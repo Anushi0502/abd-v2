@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Advanced Benefit Designs">
+  <defs>
+    <linearGradient id="abdFaviconBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b2f90" />
+      <stop offset="100%" stop-color="#1f7f03" />
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#abdFaviconBg)" />
+  <path d="M17 45 27 19h4l10 26h-5l-2.2-6H24.2L22 45h-5Zm8.8-10h6.4L29 25.8 25.8 35Z" fill="#fff" />
+  <circle cx="50" cy="14" r="4.5" fill="#fcb900" />
+</svg>
